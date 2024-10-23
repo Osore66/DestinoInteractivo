@@ -30,9 +30,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+
+
 @Composable
 fun MyApp() {
-    MainScreen()
+    Ajustes()
 }
 
 /*@Preview(showBackground = true)

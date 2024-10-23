@@ -36,6 +36,8 @@ val buttonShape = RoundedCornerShape(8.dp) // Ajusta el radio según tu preferen
 @Preview
 @Composable
 fun MainScreen() {
+    val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
+
     Box(
         Modifier
             .fillMaxSize()
@@ -60,7 +62,7 @@ fun MainScreen() {
         ) {
             val buttonShape = RoundedCornerShape(4.dp) // Define la forma del botón
             val padding = 8.dp
-            val tamanyofuente = 25.sp
+            val tamanyoFuenteMainscreen = 25.sp
 
             Button(
                 onClick = { /* Acción de continuar */ },
@@ -84,8 +86,8 @@ fun MainScreen() {
             ) {
                 Text(
                     text = "Continuar",
-                    fontFamily = FontFamily(Font(R.font.pixelgeorgiabold)),
-                    fontSize = tamanyofuente
+                    fontFamily = fuentePixelBold,
+                    fontSize = tamanyoFuenteMainscreen
                 )
             }
 
@@ -110,8 +112,8 @@ fun MainScreen() {
             ) {
                 Text(
                     text = "Nueva partida",
-                    fontFamily = FontFamily(Font(R.font.pixelgeorgiabold)),
-                    fontSize = tamanyofuente
+                    fontFamily = fuentePixelBold,
+                    fontSize = tamanyoFuenteMainscreen
                 )
             }
 
@@ -136,8 +138,8 @@ fun MainScreen() {
             ) {
                 Text(
                     text = "Ajustes",
-                    fontFamily = FontFamily(Font(R.font.pixelgeorgiabold)),
-                    fontSize = tamanyofuente
+                    fontFamily = fuentePixelBold,
+                    fontSize = tamanyoFuenteMainscreen
                 )
             }
         }
