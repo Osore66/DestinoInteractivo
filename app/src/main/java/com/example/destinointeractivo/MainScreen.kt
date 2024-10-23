@@ -14,17 +14,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Button
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+val buttonShape = RoundedCornerShape(8.dp) // Ajusta el radio según tu preferencia
 
 @Preview
 @Composable
@@ -51,31 +58,87 @@ fun MainScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center // Centrar verticalmente
         ) {
+            val buttonShape = RoundedCornerShape(4.dp) // Define la forma del botón
+            val padding = 8.dp
+            val tamanyofuente = 25.sp
+
             Button(
                 onClick = { /* Acción de continuar */ },
                 modifier = Modifier
-                    .padding(8.dp) // Espaciado entre los botones
-                    .fillMaxWidth(0.7f) // Ajustar el ancho del botón al 70% de la pantalla
+                    .padding(padding)
+                    .padding(top = 0.dp)
+                    .fillMaxWidth(0.7f)
+                    .shadow(
+
+                        elevation = 5.dp,
+                        shape = buttonShape,
+                        ambientColor = Color.LightGray,
+                        clip = true,
+
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                shape = buttonShape // Usa la misma forma para el botón
             ) {
-                Text("Continuar")
+                Text(
+                    text = "Continuar",
+                    fontFamily = FontFamily(Font(R.font.pixelgeorgiabold)),
+                    fontSize = tamanyofuente
+                )
             }
 
             Button(
-                onClick = { /* Acción de nueva partida */ },
+                onClick = { /* Acción de continuar */ },
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(padding)
                     .fillMaxWidth(0.7f)
+                    .shadow(
+
+                        elevation = 5.dp,
+                        shape = buttonShape,
+                        ambientColor = Color.LightGray,
+                        clip = true,
+
+                        ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                shape = buttonShape // Usa la misma forma para el botón
             ) {
-                Text("Nueva Partida")
+                Text(
+                    text = "Nueva partida",
+                    fontFamily = FontFamily(Font(R.font.pixelgeorgiabold)),
+                    fontSize = tamanyofuente
+                )
             }
 
             Button(
-                onClick = { /* Acción de ajustes */ },
+                onClick = { /* Acción de continuar */ },
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(padding)
                     .fillMaxWidth(0.7f)
+                    .shadow(
+
+                        elevation = 5.dp,
+                        shape = buttonShape,
+                        ambientColor = Color.LightGray,
+                        clip = true,
+
+                        ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                shape = buttonShape // Usa la misma forma para el botón
             ) {
-                Text("Ajustes")
+                Text(
+                    text = "Ajustes",
+                    fontFamily = FontFamily(Font(R.font.pixelgeorgiabold)),
+                    fontSize = tamanyofuente
+                )
             }
         }
     }
