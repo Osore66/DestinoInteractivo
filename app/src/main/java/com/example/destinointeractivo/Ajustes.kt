@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.sp
 @Preview
 @Composable
 fun Ajustes() {
-    val volumenGeneral = remember { mutableStateOf(0.5f) }
     val volumenEfectos = remember { mutableStateOf(0.5f) }
     val volumenMusica = remember { mutableStateOf(0.5f) }
     val vibracionActiva = remember { mutableStateOf(true) }
@@ -64,12 +63,6 @@ fun Ajustes() {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            VolumeSlider(
-                "Volumen general",
-                volumenGeneral.value,
-                { volumenGeneral.value = it },
-                fontFamily = fuentePixelBold
-            )
             VolumeSlider(
                 "Volumen efectos",
                 volumenEfectos.value,

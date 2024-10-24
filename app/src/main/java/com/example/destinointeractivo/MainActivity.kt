@@ -1,5 +1,6 @@
 package com.example.destinointeractivo
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,8 +23,10 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             DestinoInteractivoTheme {
-                MyApp()
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                InitialScreen()
             }
+
         }
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
@@ -33,8 +36,8 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun MyApp() {
-    Ajustes()
+fun InitialScreen() {
+    MainScreen()
 }
 
 /*@Preview(showBackground = true)
