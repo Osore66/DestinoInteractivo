@@ -30,12 +30,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.destinointeractivo.navigation.AppScreens
 
 val buttonShape = RoundedCornerShape(8.dp) // Ajusta el radio según tu preferencia
 
-@Preview
+//@Preview
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavController) {
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
 
     Box(
@@ -118,7 +120,9 @@ fun MainScreen() {
             }
 
             Button(
-                onClick = { /* Acción de continuar */ },
+                onClick = {
+                    navController.navigate(route = AppScreens.Ajustes.route + "/Soy un texto")
+                },
                 modifier = Modifier
                     .padding(padding)
                     .fillMaxWidth(0.7f)

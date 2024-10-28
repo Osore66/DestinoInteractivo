@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
+import com.example.destinointeractivo.navigation.AppNavigation
 import com.example.destinointeractivo.ui.theme.DestinoInteractivoTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             DestinoInteractivoTheme {
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                InitialScreen()
+                AppNavigation()
             }
 
         }
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun InitialScreen() {
-    MainScreen()
+    AppNavigation()
 }
 
 /*@Preview(showBackground = true)

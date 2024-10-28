@@ -16,10 +16,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.destinointeractivo.navigation.AppScreens
 
-@Preview
+//@Preview
 @Composable
-fun Ajustes() {
+fun Ajustes(navController: NavController, text: String?) {
     val volumenEfectos = remember { mutableStateOf(0.5f) }
     val volumenMusica = remember { mutableStateOf(0.5f) }
     val vibracionActiva = remember { mutableStateOf(true) }
@@ -33,10 +35,9 @@ fun Ajustes() {
 
     Box(
         modifier = Modifier
-            .padding(top = 15.dp)
             .fillMaxSize()
             .background(Color(0xFF202020))
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 40.dp, bottom = 80.dp)
     ) {
         Column(
             modifier = Modifier.align(Alignment.TopStart)
@@ -52,7 +53,7 @@ fun Ajustes() {
                     fontSize = tamanyoFuenteAjustes,
                     fontFamily = fuentePixelBold
                 )
-                IconButton(onClick = { /* Acción para cerrar */ }) {
+                IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.cerrar),
                         contentDescription = null,
@@ -144,9 +145,8 @@ fun Ajustes() {
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                onClick = { /* Acción de salir al menú */ },
+                onClick = { navController.navigate(route = AppScreens.MainScreen.route) },
                 modifier = Modifier
-                    .padding(8.dp)
                     .fillMaxWidth()
                     .shadow(
                         elevation = 4.dp,
@@ -159,11 +159,24 @@ fun Ajustes() {
                 ),
                 shape = buttonShape
             ) {
-                Text(
-                    text = "Salir al menú",
-                    fontFamily = fuentePixelBold,
-                    fontSize = 20.sp
-                )
+
+                    Text(
+                        text = "Salir al menú",
+                        fontFamily = fuentePixelBold,
+                        fontSize = 20.sp
+                    )
+
+/*
+                text?.let {
+                    Text(
+                        text = it,
+                        fontFamily = fuentePixelBold,
+                        fontSize = 20.sp
+                    )
+                }
+
+ */
+
             }
         }
     }
