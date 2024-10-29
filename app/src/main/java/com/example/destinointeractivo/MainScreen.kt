@@ -47,7 +47,7 @@ fun MainScreen(navController: NavController) {
     ) {
         // Imagen de fondo
         Image(
-            painter = painterResource(R.drawable.destinointeractivo), // Cambia por tu imagen
+            painter = painterResource(R.drawable.portada), // Cambia por tu imagen
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize(), // Ocupar todo el espacio disponible
@@ -58,6 +58,7 @@ fun MainScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 400.dp)
                 .align(Alignment.Center), // Centrar la columna
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center // Centrar verticalmente
