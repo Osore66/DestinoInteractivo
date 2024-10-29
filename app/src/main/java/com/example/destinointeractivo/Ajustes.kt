@@ -118,28 +118,51 @@ fun Ajustes(navController: NavController, text: String?) {
                         onClick = { expanded.value = true },
                         modifier = Modifier.fillMaxWidth(0.6f)
                     ) {
-                        Text(text = idiomaSeleccionado.value, fontFamily = fuentePixelBold)
+                        Text(
+                            text = idiomaSeleccionado.value,
+                            fontFamily = fuentePixelBold,
+                            color = Color.White // Texto en blanco en el botón seleccionado
+                        )
                     }
-                    DropdownMenu(
-                        expanded = expanded.value,
-                        onDismissRequest = { expanded.value = false }
-                    ) {
-                        idiomas.forEach { idioma ->
-                            Text(
-                                text = idioma,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        idiomaSeleccionado.value = idioma
-                                        expanded.value = false
-                                    }
-                                    .padding(8.dp),
-                                fontFamily = fuentePixelBold,
-                                color = Color.White // Cambia el color del texto aquí
-                            )
+
+                    // Añadir un Box que envuelva el DropdownMenu
+                    Box(modifier = Modifier.padding(start = 26.dp, top = 50.dp)) {
+                        DropdownMenu(
+                            expanded = expanded.value,
+                            onDismissRequest = { expanded.value = false },
+                            modifier = Modifier
+                                .background(Color.DarkGray) // Fondo oscuro para el menú
+                        ) {
+                            idiomas.forEachIndexed { index, idioma ->
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            idiomaSeleccionado.value = idioma
+                                            expanded.value = false
+                                        }
+                                        .background(Color.DarkGray) // Fondo oscuro para cada opción
+                                        .padding(12.dp, 3.dp)
+                                ) {
+                                    Text(
+                                        text = idioma,
+                                        fontFamily = fuentePixelBold,
+                                        color = Color.White // Texto en blanco
+                                    )
+                                }
+                                // Agregar separador entre idiomas excepto después del último elemento
+                                if (index < idiomas.size - 1) {
+                                    HorizontalDivider(
+                                        thickness = 0.5.dp,
+                                        color = Color.Gray // Color y grosor del separador
+                                    )
+                                }
+                            }
                         }
                     }
                 }
+
+
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -178,6 +201,7 @@ fun Ajustes(navController: NavController, text: String?) {
  */
 
             }
+
         }
     }
 }
