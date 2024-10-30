@@ -35,10 +35,11 @@ import com.example.destinointeractivo.navigation.AppScreens
 val buttonShape = RoundedCornerShape(4.dp) // Ajusta el radio según tu preferencia
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
     val context = LocalContext.current // Para acceder al contexto y vibrar
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
+    navViewModel.lastScreen.value = AppScreens.MainScreen.route
 
     fun vibrate() {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -106,6 +107,7 @@ fun MainScreen(navController: NavController) {
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
+                    navController.navigate(route = AppScreens.Prueba.route)
                     // Acción de nueva partida
                 },
                 modifier = Modifier
@@ -133,7 +135,7 @@ fun MainScreen(navController: NavController) {
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
-                    navController.navigate(route = AppScreens.Ajustes.route + "/Soy un texto")
+                    navController.navigate(route = AppScreens.Ajustes.route)
                 },
                 modifier = Modifier
                     .padding(padding)

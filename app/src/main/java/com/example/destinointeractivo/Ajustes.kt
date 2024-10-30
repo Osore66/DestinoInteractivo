@@ -1,6 +1,5 @@
 package com.example.destinointeractivo
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,7 +21,7 @@ import androidx.navigation.NavController
 import com.example.destinointeractivo.navigation.AppScreens
 
 @Composable
-fun Ajustes(navController: NavController, text: String?) {
+fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
     val context = LocalContext.current
     // Crear el ViewModel con el contexto
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
@@ -58,8 +57,12 @@ fun Ajustes(navController: NavController, text: String?) {
                     fontFamily = fuentePixelBold
                 )
                 IconButton(onClick = {
-                    vibrationViewModel.vibrate(context) // Llamar a vibrar desde el ViewModel
-                    navController.popBackStack()
+                    vibrationViewModel.vibrate(context)
+                    // Navega a la última pantalla visitada
+                    navController.navigate(navViewModel.lastScreen.value) {
+                        // Limpia la pila si es necesario
+                        popUpTo(AppScreens.Ajustes.route) { inclusive = true }
+                    }
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.cerrar),
