@@ -1,5 +1,6 @@
 package com.example.destinointeractivo
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -105,9 +106,9 @@ fun Ajustes(navController: NavController, text: String?) {
                     fontFamily = fuentePixelBold
                 )
                 Checkbox(
-                    checked = vibrationViewModel.vibracionActiva.value,
-                    onCheckedChange = {
-                        vibrationViewModel.setVibracionActiva(it) // Guardar el estado
+                    checked = vibrationViewModel.vibracionActiva.value, // Asegúrate de que refleje el estado del ViewModel
+                    onCheckedChange = { isChecked ->
+                        vibrationViewModel.setVibracionActiva(isChecked) // Guardar el estado
                         vibrationViewModel.vibrate(context) // Vibrar cuando cambie el checkbox
                     },
                     modifier = Modifier.padding(start = 8.dp),
@@ -180,7 +181,7 @@ fun Ajustes(navController: NavController, text: String?) {
                 }
             }
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(40.dp))
 
             // Botón para salir al menú
             Button(
@@ -202,7 +203,7 @@ fun Ajustes(navController: NavController, text: String?) {
                 shape = buttonShape
             ) {
                 Text(
-                    text = "Salir al menú",
+                    text = "Guardar y salir",
                     fontFamily = fuentePixelBold,
                     fontSize = 20.sp
                 )

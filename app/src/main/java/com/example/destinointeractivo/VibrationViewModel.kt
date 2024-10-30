@@ -8,13 +8,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
 class VibrationViewModel(private val context: Context) : ViewModel() {
-    var vibracionActiva = mutableStateOf(false)
+    var vibracionActiva = mutableStateOf(false) // Cambiar a false por defecto
         private set
 
     init {
         // Cargar el estado de vibración desde SharedPreferences al iniciar el ViewModel
         val sharedPreferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-        vibracionActiva.value = sharedPreferences.getBoolean("vibracionActiva", false)
+
+        // Verificar si es la primera vez que se inicia la aplicación
+        val isFirstRun = sharedPreferences.getBoolean("isFirstRun", true)
+
+        if (isFirstRun) {
+            vibracionActiva.value = true // Establecer en true solo la primera vez
+            // Marcar que la aplicación ya ha sido iniciada
+            with(sharedPreferences.edit()) {
+                putBoolean("isFirstRun", false)
+                apply()
+            }
+        } else {
+            // Cargar el valor guardado en SharedPreferences
+            vibracionActiva.value = sharedPreferences.getBoolean("vibracionActiva", false)
+        }
     }
 
     fun setVibracionActiva(estado: Boolean) {
