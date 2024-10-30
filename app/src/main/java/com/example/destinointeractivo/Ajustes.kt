@@ -10,28 +10,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.destinointeractivo.navigation.AppScreens
 
-//@Preview
 @Composable
 fun Ajustes(navController: NavController, text: String?) {
+    val context = LocalContext.current
+    // Crear el ViewModel con el contexto
+    val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
+
     val volumenEfectos = remember { mutableStateOf(0.5f) }
     val volumenMusica = remember { mutableStateOf(0.5f) }
-    val vibracionActiva = remember { mutableStateOf(true) }
     val idiomas = listOf("Español", "English")
     val idiomaSeleccionado = remember { mutableStateOf(idiomas[0]) }
     val expanded = remember { mutableStateOf(false) }
     val tamanyoFuenteAjustes = 25.sp
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
     val buttonShape = RoundedCornerShape(4.dp)
-
 
     Box(
         modifier = Modifier
@@ -42,6 +44,7 @@ fun Ajustes(navController: NavController, text: String?) {
         Column(
             modifier = Modifier.align(Alignment.TopStart)
         ) {
+            // Encabezado
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -53,7 +56,10 @@ fun Ajustes(navController: NavController, text: String?) {
                     fontSize = tamanyoFuenteAjustes,
                     fontFamily = fuentePixelBold
                 )
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = {
+                    vibrationViewModel.vibrate(context) // Llamar a vibrar desde el ViewModel
+                    navController.popBackStack()
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.cerrar),
                         contentDescription = null,
@@ -64,21 +70,31 @@ fun Ajustes(navController: NavController, text: String?) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
+            // VolumeSlider para efectos
             VolumeSlider(
-                "Volumen efectos",
-                volumenEfectos.value,
-                { volumenEfectos.value = it },
+                label = "Volumen efectos",
+                value = volumenEfectos.value,
+                onValueChange = {
+                    volumenEfectos.value = it
+                    vibrationViewModel.vibrate(context) // Vibrar al cambiar volumen
+                },
                 fontFamily = fuentePixelBold
             )
+
+            // VolumeSlider para música
             VolumeSlider(
-                "Volumen música",
-                volumenMusica.value,
-                { volumenMusica.value = it },
+                label = "Volumen música",
+                value = volumenMusica.value,
+                onValueChange = {
+                    volumenMusica.value = it
+                    vibrationViewModel.vibrate(context) // Vibrar al cambiar volumen
+                },
                 fontFamily = fuentePixelBold
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Checkbox para activar/desactivar la vibración global
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -88,21 +104,24 @@ fun Ajustes(navController: NavController, text: String?) {
                     fontSize = tamanyoFuenteAjustes,
                     fontFamily = fuentePixelBold
                 )
-
                 Checkbox(
-                    checked = vibracionActiva.value,
-                    onCheckedChange = { vibracionActiva.value = it },
+                    checked = vibrationViewModel.vibracionActiva.value,
+                    onCheckedChange = {
+                        vibrationViewModel.setVibracionActiva(it) // Guardar el estado
+                        vibrationViewModel.vibrate(context) // Vibrar cuando cambie el checkbox
+                    },
                     modifier = Modifier.padding(start = 8.dp),
                     colors = CheckboxDefaults.colors(
-                        checkedColor = Color.White, // Color cuando está marcado
-                        uncheckedColor = Color.Gray, // Color cuando no está marcado
-                        checkmarkColor = Color.Black // Color del checkmark
+                        checkedColor = Color.White,
+                        uncheckedColor = Color.Gray,
+                        checkmarkColor = Color.Black
                     )
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Menú desplegable de idioma
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -115,60 +134,60 @@ fun Ajustes(navController: NavController, text: String?) {
                 Spacer(modifier = Modifier.width(16.dp))
                 Box {
                     OutlinedButton(
-                        onClick = { expanded.value = true },
+                        onClick = {
+                            vibrationViewModel.vibrate(context) // Vibrar al abrir el menú
+                            expanded.value = true
+                        },
                         modifier = Modifier.fillMaxWidth(0.6f)
                     ) {
                         Text(
                             text = idiomaSeleccionado.value,
                             fontFamily = fuentePixelBold,
-                            color = Color.White // Texto en blanco en el botón seleccionado
+                            color = Color.White
                         )
                     }
 
-                    // Añadir un Box que envuelva el DropdownMenu
                     Box(modifier = Modifier.padding(start = 26.dp, top = 50.dp)) {
                         DropdownMenu(
                             expanded = expanded.value,
                             onDismissRequest = { expanded.value = false },
-                            modifier = Modifier
-                                .background(Color.DarkGray) // Fondo oscuro para el menú
+                            modifier = Modifier.background(Color.DarkGray)
                         ) {
                             idiomas.forEachIndexed { index, idioma ->
                                 Box(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .clickable {
+                                            vibrationViewModel.vibrate(context) // Vibrar al seleccionar idioma
                                             idiomaSeleccionado.value = idioma
                                             expanded.value = false
                                         }
-                                        .background(Color.DarkGray) // Fondo oscuro para cada opción
+                                        .background(Color.DarkGray)
                                         .padding(12.dp, 3.dp)
                                 ) {
                                     Text(
                                         text = idioma,
                                         fontFamily = fuentePixelBold,
-                                        color = Color.White // Texto en blanco
+                                        color = Color.White
                                     )
                                 }
-                                // Agregar separador entre idiomas excepto después del último elemento
                                 if (index < idiomas.size - 1) {
-                                    HorizontalDivider(
-                                        thickness = 0.5.dp,
-                                        color = Color.Gray // Color y grosor del separador
-                                    )
+                                    Divider(thickness = 0.5.dp, color = Color.Gray)
                                 }
                             }
                         }
                     }
                 }
-
-
             }
 
             Spacer(modifier = Modifier.weight(1f))
 
+            // Botón para salir al menú
             Button(
-                onClick = { navController.navigate(route = AppScreens.MainScreen.route) },
+                onClick = {
+                    vibrationViewModel.vibrate(context) // Vibrar al salir
+                    navController.navigate(route = AppScreens.MainScreen.route)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .shadow(
@@ -182,31 +201,17 @@ fun Ajustes(navController: NavController, text: String?) {
                 ),
                 shape = buttonShape
             ) {
-
-                    Text(
-                        text = "Salir al menú",
-                        fontFamily = fuentePixelBold,
-                        fontSize = 20.sp
-                    )
-
-/*
-                text?.let {
-                    Text(
-                        text = it,
-                        fontFamily = fuentePixelBold,
-                        fontSize = 20.sp
-                    )
-                }
-
- */
-
+                Text(
+                    text = "Salir al menú",
+                    fontFamily = fuentePixelBold,
+                    fontSize = 20.sp
+                )
             }
-
         }
     }
 }
 
-
+// Función VolumeSlider
 @Composable
 fun VolumeSlider(
     label: String,
@@ -225,7 +230,6 @@ fun VolumeSlider(
             value = value,
             onValueChange = onValueChange,
             valueRange = 0f..1f,
-            modifier = Modifier.fillMaxWidth(),
             colors = SliderDefaults.colors(
                 thumbColor = Color.White,
                 activeTrackColor = Color.White,
