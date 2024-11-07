@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -39,6 +40,10 @@ val buttonShape = RoundedCornerShape(4.dp) // Ajusta el radio según tu preferen
 
 @Composable
 fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
+
+    BackHandler {
+        // No hacer nada, evita el retroceso
+    }
     val context = LocalContext.current // Para acceder al contexto y vibrar
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))

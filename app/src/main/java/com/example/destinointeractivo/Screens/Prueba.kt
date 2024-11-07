@@ -1,5 +1,6 @@
 package com.example.destinointeractivo.Screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -39,6 +40,9 @@ import com.example.destinointeractivo.navigation.AppScreens
 
 @Composable
 fun Prueba(navController: NavController, navViewModel: NavViewModel) {
+    BackHandler {
+        // Evita el retroceso
+    }
     val context = LocalContext.current
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
     val tamanyoFuenteAjustes = 20.sp

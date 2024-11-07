@@ -23,9 +23,7 @@ class MainActivity : ComponentActivity() {
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
-        onBackPressedDispatcher.addCallback(this) {
-            // Se deja vacio para que no haga nada
-        }
+
 
         setContent {
             DestinoInteractivoTheme {

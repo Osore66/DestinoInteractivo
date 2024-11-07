@@ -1,5 +1,6 @@
 package com.example.destinointeractivo.Screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -25,6 +26,10 @@ import com.example.destinointeractivo.navigation.AppScreens
 
 @Composable
 fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
+
+    BackHandler {
+        // Evita el retroceso
+    }
     val context = LocalContext.current
     // Crear el ViewModel con el contexto
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
