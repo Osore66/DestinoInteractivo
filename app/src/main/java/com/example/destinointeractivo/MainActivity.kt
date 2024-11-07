@@ -4,15 +4,10 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
+import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import com.example.destinointeractivo.navigation.AppNavigation
@@ -28,16 +23,25 @@ class MainActivity : ComponentActivity() {
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
+        onBackPressedDispatcher.addCallback(this) {
+            // Se deja vacio para que no haga nada
+        }
+
         setContent {
             DestinoInteractivoTheme {
+
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 AppNavigation()
             }
 
         }
+
+
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
 
     }
+
+
 }
 
 

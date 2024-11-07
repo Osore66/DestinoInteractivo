@@ -1,4 +1,4 @@
-package com.example.destinointeractivo
+package com.example.destinointeractivo.Screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.destinointeractivo.NavViewModel
+import com.example.destinointeractivo.R
+import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.navigation.AppScreens
 
 @Composable

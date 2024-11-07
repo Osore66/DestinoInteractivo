@@ -1,4 +1,4 @@
-package com.example.destinointeractivo
+package com.example.destinointeractivo.Screens
 
 import android.content.Context
 import android.os.VibrationEffect
@@ -30,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.destinointeractivo.NavViewModel
+import com.example.destinointeractivo.R
+import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.navigation.AppScreens
 
 val buttonShape = RoundedCornerShape(4.dp) // Ajusta el radio según tu preferencia
