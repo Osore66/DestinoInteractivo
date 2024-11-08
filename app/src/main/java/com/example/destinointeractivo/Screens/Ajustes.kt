@@ -23,6 +23,7 @@ import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.navigation.AppScreens
+import kotlin.math.round
 
 @Composable
 fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
@@ -31,11 +32,10 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
         // Evita el retroceso
     }
     val context = LocalContext.current
-    // Crear el ViewModel con el contexto
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
 
-    val volumenEfectos = remember { mutableStateOf(0.5f) }
-    val volumenMusica = remember { mutableStateOf(0.5f) }
+    val volumenEfectos = remember { mutableStateOf(5f) }
+    val volumenMusica = remember { mutableStateOf(5f) }
     val idiomas = listOf("Español", "English")
     val idiomaSeleccionado = remember { mutableStateOf(idiomas[0]) }
     val expanded = remember { mutableStateOf(false) }
@@ -68,7 +68,6 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                     vibrationViewModel.vibrate(context)
                     // Navega a la última pantalla visitada
                     navController.navigate(navViewModel.lastScreen.value) {
-                        // Limpia la pila si es necesario
                         popUpTo(AppScreens.Ajustes.route) { inclusive = true }
                     }
                 }) {
@@ -87,8 +86,11 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                 label = "Volumen efectos",
                 value = volumenEfectos.value,
                 onValueChange = {
-                    volumenEfectos.value = it
-                    vibrationViewModel.vibrate(context) // Vibrar al cambiar volumen
+                    volumenEfectos.value = round(it) // Redondear a entero
+                },
+                onValueChangeFinished = {
+                    volumenEfectos.value = round(volumenEfectos.value) // Asegura que se mantenga en enteros
+                    vibrationViewModel.vibrate(context)
                 },
                 fontFamily = fuentePixelBold
             )
@@ -98,8 +100,11 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                 label = "Volumen música",
                 value = volumenMusica.value,
                 onValueChange = {
-                    volumenMusica.value = it
-                    vibrationViewModel.vibrate(context) // Vibrar al cambiar volumen
+                    volumenMusica.value = round(it) // Redondear a entero
+                },
+                onValueChangeFinished = {
+                    volumenMusica.value = round(volumenMusica.value) // Asegura que se mantenga en enteros
+                    vibrationViewModel.vibrate(context)
                 },
                 fontFamily = fuentePixelBold
             )
@@ -117,10 +122,10 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                     fontFamily = fuentePixelBold
                 )
                 Checkbox(
-                    checked = vibrationViewModel.vibracionActiva.value, // Asegúrate de que refleje el estado del ViewModel
+                    checked = vibrationViewModel.vibracionActiva.value,
                     onCheckedChange = { isChecked ->
-                        vibrationViewModel.setVibracionActiva(isChecked) // Guardar el estado
-                        vibrationViewModel.vibrate(context) // Vibrar cuando cambie el checkbox
+                        vibrationViewModel.setVibracionActiva(isChecked)
+                        vibrationViewModel.vibrate(context)
                     },
                     modifier = Modifier.padding(start = 8.dp),
                     colors = CheckboxDefaults.colors(
@@ -147,7 +152,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                 Box {
                     OutlinedButton(
                         onClick = {
-                            vibrationViewModel.vibrate(context) // Vibrar al abrir el menú
+                            vibrationViewModel.vibrate(context)
                             expanded.value = true
                         },
                         modifier = Modifier.fillMaxWidth(0.6f)
@@ -170,7 +175,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .clickable {
-                                            vibrationViewModel.vibrate(context) // Vibrar al seleccionar idioma
+                                            vibrationViewModel.vibrate(context)
                                             idiomaSeleccionado.value = idioma
                                             expanded.value = false
                                         }
@@ -197,7 +202,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
             // Botón para salir al menú
             Button(
                 onClick = {
-                    vibrationViewModel.vibrate(context) // Vibrar al salir
+                    vibrationViewModel.vibrate(context)
                     navController.navigate(route = AppScreens.MainScreen.route)
                 },
                 modifier = Modifier
@@ -229,11 +234,12 @@ fun VolumeSlider(
     label: String,
     value: Float,
     onValueChange: (Float) -> Unit,
+    onValueChangeFinished: () -> Unit,
     fontFamily: FontFamily
 ) {
     Column {
         Text(
-            text = label,
+            text = "$label: ${value.toInt()}", // Muestra el valor actual como entero
             color = Color.White,
             fontSize = 16.sp,
             fontFamily = fontFamily
@@ -241,9 +247,11 @@ fun VolumeSlider(
         Slider(
             value = value,
             onValueChange = onValueChange,
-            valueRange = 0f..1f,
+            onValueChangeFinished = onValueChangeFinished,
+            valueRange = 0f..10f,
+            steps = 9, // Ajuste para que el slider tenga 10 posiciones
             colors = SliderDefaults.colors(
-                thumbColor = Color.White,
+                thumbColor = if (value == 0f) Color.Gray else Color.White, // Cambia el color de la bolita
                 activeTrackColor = Color.White,
                 inactiveTrackColor = Color.Gray
             )

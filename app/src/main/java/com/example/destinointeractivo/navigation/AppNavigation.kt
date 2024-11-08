@@ -9,6 +9,7 @@ import com.example.destinointeractivo.Screens.MainScreen
 import com.example.destinointeractivo.Screens.Ajustes
 import com.example.destinointeractivo.Screens.Prueba
 import com.example.destinointeractivo.NavViewModel // Asegúrate de importar el NavViewModel
+import com.example.destinointeractivo.Screens.Combate_1
 
 @Composable
 fun AppNavigation() {
@@ -25,5 +26,11 @@ fun AppNavigation() {
         composable(route = AppScreens.Prueba.route) {
             Prueba(navController, navViewModel)
         }
+        composable(route = AppScreens.Combate_1.route) {
+            Combate_1(navController, navViewModel)
+        }
+
+
+
     }
 }

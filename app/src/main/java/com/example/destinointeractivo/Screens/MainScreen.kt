@@ -115,7 +115,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
-                    navController.navigate(route = AppScreens.Prueba.route)
+                    navController.navigate(route = AppScreens.Combate_1.route)
                     // Acción de nueva partida
                 },
                 modifier = Modifier
