@@ -88,6 +88,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
+                    navController.navigate(route = AppScreens.Prueba.route)
                     // Acción de continuar
                 },
                 modifier = Modifier

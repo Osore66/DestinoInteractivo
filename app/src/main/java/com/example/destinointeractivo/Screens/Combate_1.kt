@@ -1,5 +1,6 @@
 package com.example.destinointeractivo.Screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -31,6 +32,9 @@ val tamanyoFuenteCombate = 20.sp
 
 @Composable
 fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
+    BackHandler {
+        // No hacer nada, evita el retroceso
+    }
     val context = LocalContext.current
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
@@ -54,7 +58,7 @@ fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(colorResource(id = R.color.VeryDarkGrey))
-                    .padding(horizontal = 16.dp, vertical = 10.dp),
+                    .padding(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -78,6 +82,7 @@ fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
                     )
                 }
             }
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Sección enemigo
             Box(
