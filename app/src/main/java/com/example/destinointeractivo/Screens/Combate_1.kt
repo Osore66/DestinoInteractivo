@@ -31,7 +31,6 @@ val tamanyoFuenteCombate = 20.sp
 
 @Composable
 fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
-
     val context = LocalContext.current
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
@@ -44,7 +43,7 @@ fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.VeryDarkGrey))
-            .padding(top = 40.dp)
+            .padding(top = 40.dp),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -55,7 +54,7 @@ fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(colorResource(id = R.color.VeryDarkGrey))
-                    .padding(start = 16.dp, end = 16.dp, bottom = 10.dp),
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -86,6 +85,7 @@ fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
                     .fillMaxWidth()
                     .height(300.dp)
             ) {
+                // Fondo
                 Image(
                     painter = painterResource(id = R.drawable.paisaje),
                     contentDescription = null,
@@ -100,19 +100,11 @@ fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
                 ) {
                     Box(
                         modifier = Modifier
-                            .background(
-                                Color.Black.copy(alpha = 0.5f),
-                                buttonShape
-                            )
+                            .background(Color.Black.copy(alpha = 0.5f), buttonShape)
                             .padding(8.dp)
-                            .wrapContentSize()
                             .align(Alignment.CenterHorizontally)
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .wrapContentWidth(Alignment.CenterHorizontally),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
                             IconWithText(iconRes = R.drawable.corazon, text = "5/10", size = 25.dp)
                             Spacer(modifier = Modifier.width(10.dp))
                             IconWithText(iconRes = R.drawable.espada, text = "1", size = 23.dp)
@@ -123,75 +115,65 @@ fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Box(
+                    // Imagen del enemigo
+                    Image(
+                        painter = painterResource(id = R.drawable.slime),
+                        contentDescription = "Slime",
                         modifier = Modifier
+                            .size(80.dp)
                             .align(Alignment.CenterHorizontally)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.slime),
-                            contentDescription = "Enemigo",
-                            modifier = Modifier.size(80.dp)
-                        )
-                    }
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Box(
+            // Sección final
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .background(colorResource(id = R.color.VeryDarkGrey))
-                    .padding(horizontal = 16.dp)
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column(
+                // Texto de combate
+                Box(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .wrapContentHeight(Alignment.CenterVertically)
-                    ) {
-                        Text(
-                            text = "Un slime te impide avanzar, ¿qué decides hacer?",
-                            color = Color.White,
-                            fontSize = tamanyoFuenteCombate,
-                            fontFamily = fuentePixelBold,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight(Alignment.CenterVertically),
-                            textAlign = TextAlign.Center
-                        )
-                    }
+                    Text(
+                        text = "Un slime te impide avanzar, ¿qué decides hacer?",
+                        color = Color.White,
+                        fontSize = tamanyoFuenteCombate,
+                        fontFamily = fuentePixelBold,
+                        textAlign = TextAlign.Center
+                    )
+                }
 
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 40.dp)
-                    ) {
-                        ActionButton(text = "Atacar", fontFamily = fuentePixelBold) {
-                            // Acción de ataque
-                            vibrationViewModel.vibrate(context)
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        ActionButton(text = "Defender", fontFamily = fuentePixelBold) {
-                            // Acción de defensa
-                            vibrationViewModel.vibrate(context)
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        ActionButton(text = "Poción", fontFamily = fuentePixelBold) {
-                            // Acción para usar una poción
-                            vibrationViewModel.vibrate(context)
-                        }
-                        Spacer(modifier = Modifier.height(8.dp))
-                        ActionButton(text = "Ataque enemigo", fontFamily = fuentePixelBold) {
-                            // Acción para usar un ataque enemigo
-                            vibrationViewModel.vibrate(context)
-                        }
+                // Botones de acción
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 40.dp)
+                ) {
+                    ActionButton(text = "Atacar", fontFamily = fuentePixelBold) {
+                        vibrationViewModel.vibrate(context)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ActionButton(text = "Defender", fontFamily = fuentePixelBold) {
+                        vibrationViewModel.vibrate(context)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ActionButton(text = "Poción", fontFamily = fuentePixelBold) {
+                        vibrationViewModel.vibrate(context)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    ActionButton(text = "Ataque enemigo", fontFamily = fuentePixelBold) {
+                        vibrationViewModel.vibrate(context)
                     }
                 }
             }
@@ -221,9 +203,7 @@ fun IconWithText(iconRes: Int, text: String, size: Dp = 24.dp) {
 fun ActionButton(text: String, fontFamily: FontFamily, onClick: () -> Unit) {
     Button(
         onClick = onClick,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 0.dp),
+        modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
             contentColor = Color.Black
