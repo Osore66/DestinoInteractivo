@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -82,7 +83,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
             verticalArrangement = Arrangement.Center // Centrar verticalmente
         ) {
             val buttonShape = buttonShape // Define la forma del botón
-            val padding = 8.dp
+            val padding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp)
             val tamanyoFuenteMainscreen = 25.sp
 
             Button(
@@ -93,7 +94,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                 },
                 modifier = Modifier
                     .padding(padding)
-                    .fillMaxWidth(0.7f)
+                    .fillMaxWidth(1f)
                     .shadow(
                         elevation = 5.dp,
                         shape = buttonShape,
@@ -121,7 +122,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                 },
                 modifier = Modifier
                     .padding(padding)
-                    .fillMaxWidth(0.7f)
+                    .fillMaxWidth(1f)
                     .shadow(
                         elevation = 5.dp,
                         shape = buttonShape,
@@ -148,7 +149,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                 },
                 modifier = Modifier
                     .padding(padding)
-                    .fillMaxWidth(0.7f)
+                    .fillMaxWidth(1f)
                     .shadow(
                         elevation = 5.dp,
                         shape = buttonShape,

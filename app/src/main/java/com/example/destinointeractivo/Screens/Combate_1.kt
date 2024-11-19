@@ -46,7 +46,7 @@ fun Combate_1(navController: NavController, navViewModel: NavViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.VeryDarkGrey))
-            .padding(top = 10.dp),
+            .padding(top = 40.dp),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -157,7 +157,7 @@ fun CombateSection(vibrationViewModel: VibrationViewModel, fuentePixelBold: Font
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(horizontal = 16.dp) // Aseguramos que el contenedor ocupe todo el alto disponible
+            .padding(horizontal = 16.dp)
     ) {
         // Texto de combate (Ocupa el espacio disponible)
         Box(
@@ -180,7 +180,7 @@ fun CombateSection(vibrationViewModel: VibrationViewModel, fuentePixelBold: Font
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp)
+                .padding(bottom = 32.dp)
         ) {
             ActionButton(text = "Atacar", fontFamily = fuentePixelBold) {
                 vibrationViewModel.vibrate(context)
