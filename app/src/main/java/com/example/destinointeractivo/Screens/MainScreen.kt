@@ -77,13 +77,13 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 400.dp)
+                .padding(start = 16.dp, top = 400.dp, end = 16.dp)
                 .align(Alignment.Center), // Centrar la columna
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center // Centrar verticalmente
+            verticalArrangement = Arrangement.spacedBy(8.dp)  // Separación de los botones
         ) {
             val buttonShape = buttonShape // Define la forma del botón
-            val padding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp)
+            val paddingTopBotones = PaddingValues(top = 0.dp)
             val tamanyoFuenteMainscreen = 25.sp
 
             Button(
@@ -93,7 +93,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                     // Acción de continuar
                 },
                 modifier = Modifier
-                    .padding(padding)
+                    .padding(paddingTopBotones)
                     .fillMaxWidth(1f)
                     .shadow(
                         elevation = 5.dp,
@@ -121,7 +121,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                     // Acción de nueva partida
                 },
                 modifier = Modifier
-                    .padding(padding)
+                    .padding(paddingTopBotones)
                     .fillMaxWidth(1f)
                     .shadow(
                         elevation = 5.dp,
@@ -148,7 +148,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                     navController.navigate(route = AppScreens.Ajustes.route)
                 },
                 modifier = Modifier
-                    .padding(padding)
+                    .padding(paddingTopBotones)
                     .fillMaxWidth(1f)
                     .shadow(
                         elevation = 5.dp,

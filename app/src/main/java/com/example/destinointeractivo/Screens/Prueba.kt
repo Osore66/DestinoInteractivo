@@ -66,7 +66,7 @@ fun Prueba(navController: NavController, navViewModel: NavViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF202020))
-            .padding(start = 16.dp, end = 16.dp, top = 40.dp, bottom = 80.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 40.dp)
     ) {
         Column(
             modifier = Modifier.align(Alignment.TopStart)
