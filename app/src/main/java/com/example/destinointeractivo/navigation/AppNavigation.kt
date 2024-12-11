@@ -9,13 +9,13 @@ import com.example.destinointeractivo.Screens.MainScreen
 import com.example.destinointeractivo.Screens.Ajustes
 import com.example.destinointeractivo.Screens.Prueba
 import com.example.destinointeractivo.NavViewModel // Asegúrate de importar el NavViewModel
-import com.example.destinointeractivo.Screens.Combate_1
+import com.example.destinointeractivo.Screens.Combate_001
+import com.example.destinointeractivo.Screens.Combate_002
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     val navViewModel: NavViewModel = viewModel()
-
     NavHost(navController = navController, startDestination = AppScreens.MainScreen.route) {
         composable(route = AppScreens.MainScreen.route) {
             MainScreen(navController, navViewModel)
@@ -27,10 +27,10 @@ fun AppNavigation() {
             Prueba(navController, navViewModel)
         }
         composable(route = AppScreens.Combate_1.route) {
-            Combate_1(navController, navViewModel)
+            Combate_001(navController, navViewModel)
         }
-
-
-
+        composable(route = AppScreens.Combate_2.route) {
+            Combate_002(navController, navViewModel)
+        }
     }
 }

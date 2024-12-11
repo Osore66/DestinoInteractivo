@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.destinointeractivo.BarraEstado
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
 import com.example.destinointeractivo.VibrationViewModel
@@ -61,6 +62,10 @@ fun Prueba(navController: NavController, navViewModel: NavViewModel) {
     // Estado para daño y escudo
     val dañoJugador = remember { mutableStateOf(3) }
     val escudoEnemigo = 2
+
+
+
+
 
     Box(
         modifier = Modifier
