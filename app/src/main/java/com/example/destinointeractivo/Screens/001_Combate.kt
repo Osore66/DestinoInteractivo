@@ -65,7 +65,6 @@ fun Combate_001(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(colorResource(id = R.color.VeryDarkGrey))
-
                     .padding(innerPadding)
             ) {
                 Column(
@@ -73,7 +72,7 @@ fun Combate_001(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     // Sección del enemigo
-                    EnemigoImagenyFondo(R.drawable.paisaje, R.drawable.slime)
+                    EnemigoImagenyFondo(R.drawable.paisaje, R.drawable.slime /* imgEnemigo = null */ )
                     Spacer(modifier = Modifier.height(8.dp))
                     // Texto de combate y botones de acción
                     TextandButton(

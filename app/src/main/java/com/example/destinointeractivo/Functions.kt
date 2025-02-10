@@ -110,7 +110,7 @@ fun StatsStyle(iconRes: Int, text: String, size: Dp = 24.dp, isFixedWidth: Boole
 
 //Pantalla del enemigo
 @Composable
-fun EnemigoImagenyFondo(imgFondo: Int, imgEnemigo: Int ) {
+fun EnemigoImagenyFondo(imgFondo: Int, imgEnemigo: Int? ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -147,13 +147,18 @@ fun EnemigoImagenyFondo(imgFondo: Int, imgEnemigo: Int ) {
             Spacer(modifier = Modifier.height(8.dp))
 
             // Imagen del enemigo
-            Image(
-                painter = painterResource(imgEnemigo),
-                contentDescription = "Slime",
-                modifier = Modifier
-                    .size(80.dp)
-                    .align(Alignment.CenterHorizontally)
-            )
+            // Imagen del enemigo (condicional)
+            if (imgEnemigo != null) { // Comprueba si se proporciona imgEnemigo
+                Image(
+                    painter = painterResource(imgEnemigo),
+                    contentDescription = "Slime",
+                    modifier = Modifier
+                        .size(80.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+            } else {
+                //Vacío para que no haga nada
+            }
         }
     }
 }

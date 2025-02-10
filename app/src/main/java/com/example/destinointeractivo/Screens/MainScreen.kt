@@ -152,6 +152,35 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                 )
             }
 
+            //PRUEBAS
+            Button(
+                onClick = {
+                    vibrationViewModel.vibrate(context)
+                    navController.navigate(route = AppScreens.SinMetodos_Combate.route)
+                    // Acción de nueva partida
+                },
+                modifier = Modifier
+                    .padding(paddingTopBotones)
+                    .fillMaxWidth(1f)
+                    .shadow(
+                        elevation = 5.dp,
+                        shape = buttonShape,
+                        ambientColor = Color.LightGray,
+                        clip = true,
+                    ),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                shape = buttonShape // Usa la misma forma para el botón
+            ) {
+                Text(
+                    text = "SinMetodos_Combate",
+                    fontFamily = fuentePixelBold,
+                    fontSize = tamanyoFuenteMainscreen
+                )
+            }
+
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
