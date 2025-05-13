@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
 import com.example.destinointeractivo.VibrationViewModel
+import com.example.destinointeractivo.VibrationViewModelFactory
 import com.example.destinointeractivo.navigation.AppScreens
 import kotlin.math.round
 
@@ -32,7 +33,9 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
         // Evita el retroceso
     }
     val context = LocalContext.current
-    val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
+    val vibrationViewModel: VibrationViewModel = viewModel(
+        factory = VibrationViewModelFactory(context)
+    )
 
     val volumenEfectos = remember { mutableStateOf(5f) }
     val volumenMusica = remember { mutableStateOf(5f) }
@@ -72,6 +75,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                     }
                 }) {
                     Icon(
+                        modifier = Modifier.size(30.dp),
                         painter = painterResource(id = R.drawable.cerrar),
                         contentDescription = null,
                         tint = Color.White

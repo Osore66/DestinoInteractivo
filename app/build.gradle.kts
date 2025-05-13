@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt") // Añade esta línea
 }
 
 android {
@@ -11,8 +12,8 @@ android {
         applicationId = "com.example.destinointeractivo"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2   // 👈 Increméntalo cada vez que quieras resetear datos
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -72,4 +73,12 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
     implementation ("androidx.compose.runtime:runtime-livedata:1.4.0")
 
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1") // Para usar Coroutines con Room
+
+}
+
+kapt {
+    correctErrorTypes = true
 }

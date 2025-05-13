@@ -21,6 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.destinointeractivo.BarraEstado
 import com.example.destinointeractivo.ButtonSection
+import com.example.destinointeractivo.TextandButton
 import com.example.destinointeractivo.EnemigoImagenyFondo
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
@@ -76,49 +77,11 @@ fun Combate_002(
                         fuentePixelBold = fuentePixelBold,
                         context = context,
                         //Texto descriptivo
-                        customText = stringResource(id = R.string.ES_002_combate)
+                        customText = stringResource(id = R.string.ES_002_combate),
+                        isAttackButtonEnabled = remember { mutableStateOf(true) }.value
                     )
                 }
             }
         }
     )
-}
-
-@Composable
-fun TextandButton(
-    vibrationViewModel: VibrationViewModel,
-    fuentePixelBold: FontFamily,
-    context: Context,
-    customText: String
-) {
-    // Usar Column para dividir el espacio
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(horizontal = 16.dp)
-    ) {
-        // Texto de combate (Ocupa el espacio disponible)
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),  // El texto ocupa el espacio restante
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = customText,
-                color = Color.White,
-                fontSize = 20.sp,
-                fontFamily = fuentePixelBold,
-                textAlign = TextAlign.Center
-            )
-        }
-
-        // Botones de acción (Se quedan en la parte inferior)
-        ButtonSection(
-            vibrationViewModel = vibrationViewModel,
-            fuentePixelBold = fuentePixelBold,
-            context = context
-        )
-    }
 }

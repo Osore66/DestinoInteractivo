@@ -7,6 +7,4 @@ sealed class AppScreens(val route: String) {
     object Combate_1: AppScreens("Combate_1")
     object Combate_2: AppScreens("Combate_2")
     object SinMetodos_Combate: AppScreens("SinMetodos_Combate")
-
-
 }

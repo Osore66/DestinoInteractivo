@@ -45,6 +45,7 @@ import androidx.navigation.NavController
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
 import com.example.destinointeractivo.VibrationViewModel
+import com.example.destinointeractivo.VibrationViewModelFactory
 import com.example.destinointeractivo.navigation.AppScreens
 
 val buttonShape = RoundedCornerShape(4.dp) // Ajusta el radio según tu preferencia
@@ -56,7 +57,9 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
         // No hacer nada, evita el retroceso
     }
     val context = LocalContext.current // Para acceder al contexto y vibrar
-    val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
+    val vibrationViewModel: VibrationViewModel = viewModel(
+        factory = VibrationViewModelFactory(context)
+    )
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
     navViewModel.lastScreen.value = AppScreens.MainScreen.route
 

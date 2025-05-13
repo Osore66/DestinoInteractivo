@@ -76,9 +76,10 @@ fun BarraEstado(
                 navController.navigate(route = AppScreens.Ajustes.route)
             }) {
                 Icon(
+                    modifier = Modifier.size(30.dp),
                     painter = painterResource(id = R.drawable.settings_icon),
-                    contentDescription = "Cerrar",
-                    tint = Color.White
+                    contentDescription = "Settings",
+                    tint = Color.White,
                 )
             }
         }
@@ -168,7 +169,8 @@ fun EnemigoImagenyFondo(imgFondo: Int, imgEnemigo: Int? ) {
 fun ButtonSection(
     vibrationViewModel: VibrationViewModel,
     fuentePixelBold: FontFamily,
-    context: Context
+    context: Context,
+    isAttackButtonEnabled: Boolean // Recibimos el estado del botón Atacar
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -176,7 +178,7 @@ fun ButtonSection(
             .fillMaxWidth()
             .padding(bottom = 32.dp)
     ) {
-        ButtonStyle(text = "Atacar", fontFamily = fuentePixelBold) {
+        ButtonStyle(text = "Atacar", fontFamily = fuentePixelBold, enabled = isAttackButtonEnabled) {
             vibrationViewModel.vibrate(context)
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -195,13 +197,16 @@ fun ButtonSection(
 }
 
 @Composable
-fun ButtonStyle(text: String, fontFamily: FontFamily, onClick: () -> Unit) {
+fun ButtonStyle(text: String, fontFamily: FontFamily, enabled: Boolean = true, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White,
-            contentColor = Color.Black
+            contentColor = Color.Black,
+            disabledContainerColor = Color.Gray,
+            disabledContentColor = Color.DarkGray
         ),
         shape = RoundedCornerShape(4.dp)
     ) {
@@ -220,7 +225,8 @@ fun TextandButton(
     vibrationViewModel: VibrationViewModel,
     fuentePixelBold: FontFamily,
     context: Context,
-    customText: Int
+    customText: String,
+    isAttackButtonEnabled: Boolean // Recibimos el estado del botón Atacar
 ) {
     // Usar Column para dividir el espacio
     Column(
@@ -237,7 +243,7 @@ fun TextandButton(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = stringResource(id = customText),
+                text = customText,
                 color = Color.White,
                 fontSize = 20.sp,
                 fontFamily = fuentePixelBold,
@@ -249,7 +255,8 @@ fun TextandButton(
         ButtonSection(
             vibrationViewModel = vibrationViewModel,
             fuentePixelBold = fuentePixelBold,
-            context = context
+            context = context,
+            isAttackButtonEnabled = isAttackButtonEnabled // Pasamos el estado a ButtonSection
         )
     }
 }

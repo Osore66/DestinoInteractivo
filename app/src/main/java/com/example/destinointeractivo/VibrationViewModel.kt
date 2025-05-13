@@ -12,24 +12,21 @@ class VibrationViewModel(private val context: Context) : ViewModel() {
         private set
 
     init {
-        // Cargar el estado de vibración desde SharedPreferences al iniciar el ViewModel
         val sharedPreferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
-
-        // Verificar si es la primera vez que se inicia la aplicación
         val isFirstRun = sharedPreferences.getBoolean("isFirstRun", true)
 
         if (isFirstRun) {
-            vibracionActiva.value = true // Establecer en true solo la primera vez
-            // Marcar que la aplicación ya ha sido iniciada
+            vibracionActiva.value = true
             with(sharedPreferences.edit()) {
+                putBoolean("vibracionActiva", true)
                 putBoolean("isFirstRun", false)
                 apply()
             }
         } else {
-            // Cargar el valor guardado en SharedPreferences
             vibracionActiva.value = sharedPreferences.getBoolean("vibracionActiva", false)
         }
     }
+
 
     fun setVibracionActiva(estado: Boolean) {
         vibracionActiva.value = estado
@@ -43,11 +40,13 @@ class VibrationViewModel(private val context: Context) : ViewModel() {
 
     fun vibrate(context: Context) {
         if (vibracionActiva.value) {
+            @Suppress("DEPRECATION")
             val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE))
+                vibrator.vibrate(VibrationEffect.createOneShot(15, VibrationEffect.DEFAULT_AMPLITUDE))
             } else {
-                vibrator.vibrate(30)
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(15)
             }
         }
     }

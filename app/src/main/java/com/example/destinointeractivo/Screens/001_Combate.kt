@@ -24,11 +24,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.destinointeractivo.BarraEstado
-import com.example.destinointeractivo.ButtonSection
 import com.example.destinointeractivo.EnemigoImagenyFondo
+import com.example.destinointeractivo.TextandButton
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
-import com.example.destinointeractivo.StatsStyle
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.navigation.AppScreens
 
@@ -37,8 +36,7 @@ import com.example.destinointeractivo.navigation.AppScreens
 fun Combate_001(
     navController: NavController,
     navViewModel: NavViewModel,
-
-    ) {
+) {
     // Contexto local
     val context = LocalContext.current
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
@@ -79,13 +77,11 @@ fun Combate_001(
                         vibrationViewModel = vibrationViewModel,
                         fuentePixelBold = fuentePixelBold,
                         context = context,
-                        //Texto descriptivo
-                        customText = stringResource(id = R.string.ES_001_combate)
+                        customText = stringResource(id = R.string.ES_001_combate),
+                        isAttackButtonEnabled = remember { mutableStateOf(true) }.value
                     )
                 }
             }
         }
     )
 }
-
-
