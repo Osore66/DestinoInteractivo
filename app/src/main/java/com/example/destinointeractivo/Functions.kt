@@ -22,24 +22,37 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.destinointeractivo.navigation.AppScreens
+import com.example.destinointeractivo.viewmodel.EnemyViewModel
+import com.example.destinointeractivo.viewmodel.PlayerViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 val tamanyoFuenteCombate = 20.sp
-
 
 @Composable
 fun BarraEstado(
@@ -84,28 +97,6 @@ fun BarraEstado(
             }
         }
         Spacer(modifier = Modifier.height(10.dp))
-    }
-}
-
-@Composable
-fun StatsStyle(iconRes: Int, text: String, size: Dp = 24.dp, isFixedWidth: Boolean = false) {
-    Row(
-        //el modifier es para que uno o varios iconos (junto a su texto) ocupe una medida fija poniendole isFixedWidth = true, pero al final he decidio no usarlo.
-        //modifier = if (isFixedWidth) Modifier.width(120.dp) else Modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(id = iconRes),
-            contentDescription = null,
-            modifier = Modifier.size(size)
-        )
-        Spacer(modifier = Modifier.width(4.dp))
-        Text(
-            text = text,
-            color = Color.White,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
-        )
     }
 }
 
@@ -197,30 +188,6 @@ fun ButtonSection(
 }
 
 @Composable
-fun ButtonStyle(text: String, fontFamily: FontFamily, enabled: Boolean = true, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        modifier = Modifier.fillMaxWidth(),
-        enabled = enabled,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = Color.White,
-            contentColor = Color.Black,
-            disabledContainerColor = Color.Gray,
-            disabledContentColor = Color.DarkGray
-        ),
-        shape = RoundedCornerShape(4.dp)
-    ) {
-        Text(
-            text = text,
-            fontFamily = fontFamily,
-            fontSize = tamanyoFuenteCombate
-        )
-    }
-}
-
-
-
-@Composable
 fun TextandButton(
     vibrationViewModel: VibrationViewModel,
     fuentePixelBold: FontFamily,
@@ -259,4 +226,55 @@ fun TextandButton(
             isAttackButtonEnabled = isAttackButtonEnabled // Pasamos el estado a ButtonSection
         )
     }
+}
+
+//Estilos
+@Composable
+fun ButtonStyle(text: String, fontFamily: FontFamily, enabled: Boolean = true, onClick: () -> Unit) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.White,
+            contentColor = Color.Black,
+            disabledContainerColor = Color.Gray,
+            disabledContentColor = Color.DarkGray
+        ),
+        shape = RoundedCornerShape(4.dp)
+    ) {
+        Text(
+            text = text,
+            fontFamily = fontFamily,
+            fontSize = tamanyoFuenteCombate
+        )
+    }
+}
+
+@Composable
+fun StatsStyle(iconRes: Int, text: String, size: Dp = 24.dp, isFixedWidth: Boolean = false) {
+    Row(
+        //el modifier es para que uno o varios iconos (junto a su texto) ocupe una medida fija poniendole isFixedWidth = true, pero al final he decidio no usarlo.
+        //modifier = if (isFixedWidth) Modifier.width(120.dp) else Modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = painterResource(id = iconRes),
+            contentDescription = null,
+            modifier = Modifier.size(size)
+        )
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(
+            text = text,
+            color = Color.White,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+fun localizedString(resId: Int, language: String): String {
+    return stringMap[language]?.get(resId)
+        ?: stringResource(id = resId) // Fallback a strings.xml
 }

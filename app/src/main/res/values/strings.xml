@@ -1,9 +1,34 @@
 <resources>
     <string name="app_name">Destino Interactivo</string>
+
+    <!-- Mensajes de combate -->
     <string name="ES_001_combate">
-        Te topas con un travieso slime que te impide avanzar, no parece muy peligro, ¿qué decides hacer? Ten en cuenta que puedes morir y tener que empezar de nuevo.
+        Te topas con un travieso enemigo que te impide avanzar, no parece muy peligroso, ¿qué decides hacer? Ten en cuenta que puedes morir y tener que empezar de nuevo.
     </string>
     <string name="ES_002_combate">
-        Te encuentras con un travieso slime que te impide avanzar, no parece muy peligro, ¿qué decides hacer? Ten en cuenta que puedes morir y tener que empezar de nuevo.
+        Te encuentras con un travieso slime que te impide avanzar, no parece muy peligroso, ¿qué decides hacer? Ten en cuenta que puedes morir y tener que empezar de nuevo.
     </string>
+
+    <!-- Botones -->
+    <string name="btn_continuar">Continuar</string>
+    <string name="btn_nueva_partida">Nueva Partida</string>
+    <string name="btn_ajustes">Ajustes</string>
+    <string name="btn_volver_al_menu">Volver al Menú</string>
+
+    <!-- Ajustes -->
+    <string name="ajustes_idioma">Idioma</string>
+    <string name="ajustes_idioma_espanol">Español</string>
+    <string name="ajustes_idioma_ingles">Inglés</string>
+    <string name="ajustes_vibracion">Vibración</string>
+    <string name="ajustes_volumen_efectos">Volumen efectos</string>
+    <string name="ajustes_volumen_musica">Volumen música</string>
+    <string name="ajustes_salir">Guardar y salir</string>
+
+    <!-- Combate -->
+    <string name="victoria_mensaje">¡Has ganado!</string>
+    <string name="derrota_mensaje">¡Has sido derrotado!</string>
+    <string name="combate_atacar">Atacar</string>
+    <string name="combate_defender">Defender</string>
+    <string name="combate_pocion">Poción</string>
+    <string name="combate_reiniciar">Volver a empezar</string>
 </resources>

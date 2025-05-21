@@ -29,3 +29,4 @@ interface EnemyDao {
     @Query("DELETE FROM enemies")
     suspend fun deleteAllEnemies()
 }
+

@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -23,8 +24,12 @@ import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.VibrationViewModelFactory
+import com.example.destinointeractivo.localizedString
 import com.example.destinointeractivo.navigation.AppScreens
+import com.example.destinointeractivo.viewmodel.EnemyViewModel
+import com.example.destinointeractivo.viewmodel.PlayerViewModel
 import kotlin.math.round
+import com.example.destinointeractivo.stringMap
 
 @Composable
 fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
@@ -39,12 +44,25 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
 
     val volumenEfectos = remember { mutableStateOf(5f) }
     val volumenMusica = remember { mutableStateOf(5f) }
-    val idiomas = listOf("Español", "English")
-    val idiomaSeleccionado = remember { mutableStateOf(idiomas[0]) }
     val expanded = remember { mutableStateOf(false) }
     val tamanyoFuenteAjustes = 25.sp
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
     val buttonShape = RoundedCornerShape(4.dp)
+    val playerViewModel: PlayerViewModel = viewModel()
+    val enemyViewModel: EnemyViewModel = viewModel()
+    val playerLanguage by playerViewModel.playerLanguage.collectAsState()
+    val idiomas = listOf("Español", "English")
+    val idiomaSeleccionado = remember { mutableStateOf(idiomas[0]) }
+    val refreshKey = remember { mutableStateOf(0) }
+
+    fun forceRecomposition() {
+        refreshKey.value = refreshKey.value + 1
+    }
+
+// Detectar idioma actual y seleccionar en el menú
+    LaunchedEffect(playerLanguage) {
+        idiomaSeleccionado.value = if (playerLanguage == "es") "Español" else "English"
+    }
 
     Box(
         modifier = Modifier
@@ -62,7 +80,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "AJUSTES",
+                    text = localizedString(R.string.btn_ajustes, playerLanguage),
                     color = Color.White,
                     fontSize = tamanyoFuenteAjustes,
                     fontFamily = fuentePixelBold
@@ -87,7 +105,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
 
             // VolumeSlider para efectos
             VolumeSlider(
-                label = "Volumen efectos",
+                label = localizedString(R.string.ajustes_volumen_efectos, playerLanguage),
                 value = volumenEfectos.value,
                 onValueChange = {
                     volumenEfectos.value = round(it) // Redondear a entero
@@ -101,7 +119,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
 
             // VolumeSlider para música
             VolumeSlider(
-                label = "Volumen música",
+                label = localizedString(R.string.ajustes_volumen_musica, playerLanguage),
                 value = volumenMusica.value,
                 onValueChange = {
                     volumenMusica.value = round(it) // Redondear a entero
@@ -120,7 +138,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Vibración",
+                    text = localizedString(R.string.ajustes_vibracion, playerLanguage),
                     color = Color.White,
                     fontSize = tamanyoFuenteAjustes,
                     fontFamily = fuentePixelBold
@@ -143,11 +161,9 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Menú desplegable de idioma
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "Idioma",
+                    text = localizedString(R.string.ajustes_idioma, playerLanguage),
                     color = Color.White,
                     fontSize = tamanyoFuenteAjustes,
                     fontFamily = fuentePixelBold
@@ -168,34 +184,37 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                         )
                     }
 
-                    Box(modifier = Modifier.padding(start = 26.dp, top = 50.dp)) {
-                        DropdownMenu(
-                            expanded = expanded.value,
-                            onDismissRequest = { expanded.value = false },
-                            modifier = Modifier.background(Color.DarkGray)
-                        ) {
-                            idiomas.forEachIndexed { index, idioma ->
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            vibrationViewModel.vibrate(context)
-                                            idiomaSeleccionado.value = idioma
-                                            expanded.value = false
-                                        }
-                                        .background(Color.DarkGray)
-                                        .padding(12.dp, 3.dp)
-                                ) {
+                    DropdownMenu(
+                        expanded = expanded.value,
+                        onDismissRequest = { expanded.value = false },
+                        modifier = Modifier
+                            .background(Color.DarkGray)
+                            .padding(start = 16.dp, end = 16.dp)
+                    ) {
+                        idiomas.forEach { idioma ->
+                            DropdownMenuItem(
+                                modifier = Modifier.fillMaxWidth(),
+                                text = {
                                     Text(
-                                        text = idioma,
+                                        text = localizedString(
+                                            if (idioma == "Español") R.string.ajustes_idioma_espanol else R.string.ajustes_idioma_ingles,
+                                            playerLanguage
+                                        ),
                                         fontFamily = fuentePixelBold,
-                                        color = Color.White
+                                        color = Color.White,
+                                        modifier = Modifier.fillMaxWidth(),
+                                        textAlign = TextAlign.Center
                                     )
+                                },
+                                onClick = {
+                                    vibrationViewModel.vibrate(context)
+                                    val newLanguage = if (idioma == "Español") "es" else "en"
+                                    playerViewModel.updateAppLanguage(context, newLanguage)
+                                    forceRecomposition()
+                                    idiomaSeleccionado.value = idioma
+                                    expanded.value = false
                                 }
-                                if (index < idiomas.size - 1) {
-                                    Divider(thickness = 0.5.dp, color = Color.Gray)
-                                }
-                            }
+                            )
                         }
                     }
                 }
@@ -207,7 +226,9 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
-                    navController.navigate(route = AppScreens.MainScreen.route)
+                    navController.navigate(route = AppScreens.MainScreen.route) {
+                        popUpTo(AppScreens.MainScreen.route) { inclusive = false }
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -223,7 +244,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                 shape = buttonShape
             ) {
                 Text(
-                    text = "Guardar y salir",
+                    text = localizedString(R.string.ajustes_salir, playerLanguage),
                     fontFamily = fuentePixelBold,
                     fontSize = 20.sp
                 )

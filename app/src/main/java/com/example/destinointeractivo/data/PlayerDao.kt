@@ -8,15 +8,22 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PlayerDao {
-    @Query("SELECT * FROM player WHERE id = 1")
-    fun getPlayerData(): Flow<Player?>
 
+    // --- CRUD ---
     @Insert
     suspend fun insert(player: Player)
 
     @Update
     suspend fun update(player: Player)
 
+    @Query("DELETE FROM player")
+    suspend fun deleteAllPlayers()
+
+    // --- Lectura ---
+    @Query("SELECT * FROM player WHERE id = 1")
+    fun getPlayerData(): Flow<Player?>
+
+    // --- Actualizaciones específicas ---
     @Query("UPDATE player SET currentLife = :newLife WHERE id = 1")
     suspend fun updateCurrentLife(newLife: Int)
 
@@ -35,10 +42,19 @@ interface PlayerDao {
     @Query("UPDATE player SET language = :newLanguage WHERE id = 1")
     suspend fun updateLanguage(newLanguage: String)
 
-    @Query("UPDATE player SET lastLevel = :newLastLevel WHERE id = 1")  //Nueva Query
+    @Query("UPDATE player SET lastLevel = :newLastLevel WHERE id = 1")
     suspend fun updateLastLevel(newLastLevel: String)
 
-    // Nuevo método para borrar todos los jugadores
-    @Query("DELETE FROM player")
-    suspend fun deleteAllPlayers()
+    @Query("UPDATE player SET enemyTurnCount = :turnCount WHERE id = 1")
+    suspend fun updateEnemyTurnCount(turnCount: Int)
+
+
+    // --- Consultas auxiliares ---
+    @Query("SELECT potionHealAmount FROM player WHERE id = 1")
+    suspend fun getPotionHealAmount(): Int
+
+    @Query("SELECT effectsVolume, musicVolume, vibrationEnabled, language FROM player WHERE id = 1")
+    suspend fun getPlayerSettings(): PlayerSettings
+
 }
+

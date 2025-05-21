@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Enemy::class, Player::class], version = 4)
+@Database(entities = [Enemy::class, Player::class], version = 6)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun enemyDao(): EnemyDao
@@ -52,7 +52,7 @@ abstract class AppDatabase : RoomDatabase() {
                             }
                         }
                     })
-                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
                     .build()
 
                 // Guardamos la nueva versión de la app
@@ -120,6 +120,21 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("DROP TABLE IF EXISTS player")
+                database.execSQL("DROP TABLE IF EXISTS enemies")
+            }
+        }
+
+        val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE player ADD COLUMN enemyTurnCount INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
+
+
         // Método para insertar datos solo una vez por instalación
         private suspend fun AppDatabase.populateDatabaseOnce(context: Context, enemyDao: EnemyDao, playerDao: PlayerDao) {
             populateDatabase(enemyDao, playerDao)
@@ -127,35 +142,15 @@ abstract class AppDatabase : RoomDatabase() {
 
         // Datos iniciales
         private suspend fun AppDatabase.populateDatabase(enemyDao: EnemyDao, playerDao: PlayerDao) {
-            // Borrar todo antes de insertar nuevos datos
             enemyDao.deleteAllEnemies()
             playerDao.deleteAllPlayers()
 
-            // Insertamos enemigos desde cero
-            enemyDao.insert(Enemy(id = 1, currentLife = 800, maxLife = 800, damage = 10, defense = 1, nivel = "Combate_1", critFreq = 2))
-            enemyDao.insert(Enemy(id = 2, currentLife = 15, maxLife = 15, damage = 3, defense = 0, nivel = "Combate_2", critFreq = 3))
-            enemyDao.insert(Enemy(id = 3, currentLife = 20, maxLife = 20, damage = 4, defense = 1, nivel = "Combate_3", critFreq = 3))
-            enemyDao.insert(Enemy(id = 4, currentLife = 20, maxLife = 20, damage = 4, defense = 1, nivel = "Combate_4", critFreq = 3))
-            enemyDao.insert(Enemy(id = 5, currentLife = 8, maxLife = 8, damage = 1, defense = 2, nivel = "Tutorial", critFreq = 2))
-            enemyDao.insert(Enemy(id = 6, currentLife = 8, maxLife = 8, damage = 1, defense = 2, nivel = "TutorialDificil", critFreq = 2))
-            enemyDao.insert(Enemy(id = 7, currentLife = 20, maxLife = 20, damage = 4, defense = 1, nivel = "Jefe_Final", critFreq = 3))
-
-            // Jugador por defecto
-            val defaultPlayer = Player(
-                id = 1,
-                currentLife = 900,
-                maxLife = 900,
-                damage = 10,
-                defense = 1,
-                potions = 2,
-                potionHealAmount = 5,
-                effectsVolume = 8,
-                musicVolume = 5,
-                vibrationEnabled = true,
-                language = "es",
-                lastLevel = "SinMetodos_Combate.kt"
-            )
-            playerDao.insert(defaultPlayer)
+            // Insertamos desde InitialData
+            for (enemy in InitialData.enemyList) {
+                enemyDao.insert(enemy)
+            }
+            playerDao.insert(InitialData.defaultPlayer)
         }
     }
 }
+

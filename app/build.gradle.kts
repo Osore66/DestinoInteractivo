@@ -12,7 +12,7 @@ android {
         applicationId = "com.example.destinointeractivo"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2   // 👈 Increméntalo cada vez que quieras resetear datos
+        versionCode = 5   // 👈 Increméntalo cada vez que quieras resetear datos
         versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -82,3 +82,4 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+

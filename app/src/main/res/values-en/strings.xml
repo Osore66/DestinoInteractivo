@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Interactive Fate</string>
+
+    <!-- Mensajes de combate -->
+    <string name="ES_001_combate">
+        You come across a mischievous enemy blocking your way. It doesn\'t seem too dangerous. What do you decide to do? Keep in mind that you can die and have to start over.
+    </string>
+    <string name="ES_002_combate">
+        You encounter a slippery slime blocking your path. It doesn\'t look too threatening. What do you decide to do? Remember that you could die and have to restart.
+    </string>
+
+    <!-- Botones -->
+    <string name="btn_continuar">Continue</string>
+    <string name="btn_nueva_partida">New Game</string>
+    <string name="btn_ajustes">Settings</string>
+    <string name="btn_volver_al_menu">Back to Menu</string>
+
+    <!-- Ajustes -->
+    <string name="ajustes_idioma">Language</string>
+    <string name="ajustes_idioma_espanol">Spanish</string>
+    <string name="ajustes_idioma_ingles">English</string>
+    <string name="ajustes_vibracion">Vibration</string>
+    <string name="ajustes_volumen_efectos">Effects volume</string>
+    <string name="ajustes_volumen_musica">Music volume</string>
+    <string name="ajustes_salir">Save and exit</string>
+
+    <!-- Combate -->
+    <string name="victoria_mensaje">You Win!</string>
+    <string name="derrota_mensaje">You have been defeated!</string>
+    <string name="combate_atacar">Attack</string>
+    <string name="combate_defender">Defend</string>
+    <string name="combate_pocion">Potion</string>
+    <string name="combate_reiniciar">Try again</string>
+</resources>

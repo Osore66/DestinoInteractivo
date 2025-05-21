@@ -5,18 +5,19 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "player")
 data class Player(
-    @PrimaryKey(autoGenerate = false) val id: Int = 1,
-    val currentLife: Int,
-    val maxLife: Int,
-    val damage: Int,
-    val defense: Int,
-    val potions: Int,
-    val potionHealAmount: Int,
-    val effectsVolume: Int,
-    val musicVolume: Int,
-    val vibrationEnabled: Boolean,
-    val language: String,
-    val lastLevel: String
+    @PrimaryKey val id: Int = 1,
+    var currentLife: Int,
+    var maxLife: Int,
+    var damage: Int,
+    var defense: Int,
+    var potions: Int,
+    var potionHealAmount: Int,
+    var effectsVolume: Int,
+    var musicVolume: Int,
+    var vibrationEnabled: Boolean,
+    var language: String,
+    var lastLevel: String,
+    var enemyTurnCount: Int = 0,
 ) {
     init {
         require(currentLife <= maxLife) { "La vida actual no puede ser mayor que la vida máxima." }
@@ -25,3 +26,4 @@ data class Player(
         require(language == "es" || language == "en") { "El idioma debe ser 'es' o 'en'." }
     }
 }
+

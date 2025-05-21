@@ -11,7 +11,9 @@ import com.example.destinointeractivo.Screens.Prueba
 import com.example.destinointeractivo.NavViewModel // Asegúrate de importar el NavViewModel
 import com.example.destinointeractivo.Screens.Combate_001
 import com.example.destinointeractivo.Screens.Combate_002
+import com.example.destinointeractivo.Screens.DerrotaScreen
 import com.example.destinointeractivo.Screens.SinMetodos_Combate
+import com.example.destinointeractivo.Screens.VictoriaScreen
 
 @Composable
 fun AppNavigation() {
@@ -35,6 +37,12 @@ fun AppNavigation() {
         }
         composable(route = AppScreens.SinMetodos_Combate.route) {
             SinMetodos_Combate(navController, navViewModel)
+        }
+        composable(route = AppScreens.VictoriaScreen.route) {
+            VictoriaScreen(navController, navViewModel)
+        }
+        composable(route = AppScreens.DerrotaScreen.route) {
+            DerrotaScreen(navController, navViewModel)
         }
     }
 }

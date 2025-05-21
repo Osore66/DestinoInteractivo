@@ -26,6 +26,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -46,23 +49,29 @@ import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.VibrationViewModelFactory
+import com.example.destinointeractivo.localizedString
 import com.example.destinointeractivo.navigation.AppScreens
+import com.example.destinointeractivo.stringMap
+import com.example.destinointeractivo.viewmodel.EnemyViewModel
+import com.example.destinointeractivo.viewmodel.PlayerViewModel
+import kotlinx.coroutines.launch
 
 val buttonShape = RoundedCornerShape(4.dp) // Ajusta el radio según tu preferencia
 
 @Composable
 fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
+    BackHandler { /* Evita retroceso */ }
 
-    BackHandler {
-        // No hacer nada, evita el retroceso
-    }
-    val context = LocalContext.current // Para acceder al contexto y vibrar
-    val vibrationViewModel: VibrationViewModel = viewModel(
-        factory = VibrationViewModelFactory(context)
-    )
+    val context = LocalContext.current
+    val vibrationViewModel: VibrationViewModel = viewModel(factory = VibrationViewModelFactory(context))
+    val playerViewModel: PlayerViewModel = viewModel()
+    val enemyViewModel: EnemyViewModel = viewModel()
+    val coroutineScope = rememberCoroutineScope()
+    val playerLanguage by playerViewModel.playerLanguage.collectAsState()
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
     navViewModel.lastScreen.value = AppScreens.MainScreen.route
 
+    // Función para vibrar
     fun vibrate() {
         val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -75,107 +84,101 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
     Box(
         Modifier
             .fillMaxSize()
-            .background(Color.Black) // Esto es temporal, el fondo se reemplaza por la imagen
+            .background(Color.Black)
     ) {
         // Imagen de fondo
         Image(
             painter = painterResource(R.drawable.portada),
             contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize(), // Ocupar todo el espacio disponible
-            contentScale = ContentScale.Crop // Escalar la imagen para llenar todo el espacio
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
 
-        // Columna con botones superpuestos en el centro
+        // Botones centrados
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, top = 400.dp, end = 16.dp)
-                .align(Alignment.Center), // Centrar la columna
+                .align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)  // Separación de los botones
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            val buttonShape = buttonShape // Define la forma del botón
-            val paddingTopBotones = PaddingValues(top = 0.dp)
             val tamanyoFuenteMainscreen = 25.sp
 
+            // Botón "Continuar"
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
-                    navController.navigate(route = AppScreens.Prueba.route)
-                    // Acción de continuar
+                    coroutineScope.launch {
+                        val player = playerViewModel.getPlayerData()
+                        val lastLevel = player?.lastLevel ?: AppScreens.SinMetodos_Combate.route
+                        navController.navigate(route = lastLevel)
+                    }
                 },
                 modifier = Modifier
-                    .padding(paddingTopBotones)
-                    .fillMaxWidth(1f)
-                    .shadow(
-                        elevation = 5.dp,
-                        shape = buttonShape,
-                        ambientColor = Color.LightGray,
-                        clip = true,
-                    ),
+                    .fillMaxWidth()
+                    .shadow(elevation = 5.dp, shape = buttonShape),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
                 ),
-                shape = buttonShape // Usa la misma forma para el botón
+                shape = buttonShape
             ) {
                 Text(
-                    text = "Continuar",
+                    text = localizedString(R.string.btn_continuar, playerLanguage),
                     fontFamily = fuentePixelBold,
                     fontSize = tamanyoFuenteMainscreen
                 )
             }
 
+            // Botón "Nueva Partida"
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
-                    navController.navigate(route = AppScreens.Combate_1.route)
-                    // Acción de nueva partida
+                    coroutineScope.launch {
+                        try {
+                            val settings = playerViewModel.getPlayerSettings()
+                            playerViewModel.resetPlayerData(settings)
+                            enemyViewModel.resetEnemyData()
+                        } catch (e: Exception) {
+                            playerViewModel.resetPlayerDataWithDefaultSettings()
+                            enemyViewModel.resetEnemyData()
+                        }
+                        navController.navigate(route = AppScreens.SinMetodos_Combate.route)
+                    }
                 },
                 modifier = Modifier
-                    .padding(paddingTopBotones)
-                    .fillMaxWidth(1f)
-                    .shadow(
-                        elevation = 5.dp,
-                        shape = buttonShape,
-                        ambientColor = Color.LightGray,
-                        clip = true,
-                    ),
+                    .fillMaxWidth()
+                    .shadow(elevation = 5.dp, shape = buttonShape),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
                 ),
-                shape = buttonShape // Usa la misma forma para el botón
+                shape = buttonShape
             ) {
                 Text(
-                    text = "Nueva partida",
+                    text = localizedString(R.string.btn_nueva_partida, playerLanguage),
                     fontFamily = fuentePixelBold,
                     fontSize = tamanyoFuenteMainscreen
                 )
             }
 
-            //PRUEBAS
+            /*
+
+            // Botón de prueba para SinMetodos_Combate (opcional)
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
                     navController.navigate(route = AppScreens.SinMetodos_Combate.route)
-                    // Acción de nueva partida
                 },
                 modifier = Modifier
-                    .padding(paddingTopBotones)
-                    .fillMaxWidth(1f)
-                    .shadow(
-                        elevation = 5.dp,
-                        shape = buttonShape,
-                        ambientColor = Color.LightGray,
-                        clip = true,
-                    ),
+                    .fillMaxWidth()
+                    .shadow(elevation = 5.dp, shape = buttonShape),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
                 ),
-                shape = buttonShape // Usa la misma forma para el botón
+                shape = buttonShape
             ) {
                 Text(
                     text = "SinMetodos_Combate",
@@ -184,28 +187,25 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                 )
             }
 
+             */
+
+            // Botón de ajustes (sin cambios)
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
                     navController.navigate(route = AppScreens.Ajustes.route)
                 },
                 modifier = Modifier
-                    .padding(paddingTopBotones)
-                    .fillMaxWidth(1f)
-                    .shadow(
-                        elevation = 5.dp,
-                        shape = buttonShape,
-                        ambientColor = Color.LightGray,
-                        clip = true,
-                    ),
+                    .fillMaxWidth()
+                    .shadow(elevation = 5.dp, shape = buttonShape),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White,
                     contentColor = Color.Black
                 ),
-                shape = buttonShape // Usa la misma forma para el botón
+                shape = buttonShape
             ) {
                 Text(
-                    text = "Ajustes",
+                    text = localizedString(R.string.btn_ajustes, playerLanguage),
                     fontFamily = fuentePixelBold,
                     fontSize = tamanyoFuenteMainscreen
                 )
