@@ -22,7 +22,7 @@
     <string name="ajustes_vibracion">Vibration</string>
     <string name="ajustes_volumen_efectos">Effects volume</string>
     <string name="ajustes_volumen_musica">Music volume</string>
-    <string name="ajustes_salir">Save and exit</string>
+    <string name="ajustes_salir">Exit to menu</string>
 
     <!-- Combate -->
     <string name="victoria_mensaje">You Win!</string>

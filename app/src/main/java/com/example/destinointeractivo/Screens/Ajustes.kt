@@ -20,8 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.destinointeractivo.BackgroundMusicPlayer
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
+import com.example.destinointeractivo.SoundPlayer
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.VibrationViewModelFactory
 import com.example.destinointeractivo.localizedString
@@ -41,25 +43,47 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
     val vibrationViewModel: VibrationViewModel = viewModel(
         factory = VibrationViewModelFactory(context)
     )
+    val playerViewModel: PlayerViewModel = viewModel()
 
-    val volumenEfectos = remember { mutableStateOf(5f) }
-    val volumenMusica = remember { mutableStateOf(5f) }
+    // Estos estados locales reflejan el valor del slider (0-10)
+    var volumenEfectos by remember { mutableStateOf(0f) }
+    var volumenMusica by remember { mutableStateOf(0f) }
+
     val expanded = remember { mutableStateOf(false) }
     val tamanyoFuenteAjustes = 25.sp
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
     val buttonShape = RoundedCornerShape(4.dp)
-    val playerViewModel: PlayerViewModel = viewModel()
     val enemyViewModel: EnemyViewModel = viewModel()
     val playerLanguage by playerViewModel.playerLanguage.collectAsState()
     val idiomas = listOf("Español", "English")
     val idiomaSeleccionado = remember { mutableStateOf(idiomas[0]) }
     val refreshKey = remember { mutableStateOf(0) }
 
+    // Observa los volúmenes de la base de datos
+    val effectsVolumeDB by playerViewModel.playerEffectsVolume.collectAsState(initial = 10) // Valor inicial
+    val musicVolumeDB by playerViewModel.playerMusicVolume.collectAsState(initial = 10) // Valor inicial
+
+    // Sincroniza los estados locales del slider con los valores de la base de datos una vez que se cargan
+    LaunchedEffect(effectsVolumeDB, musicVolumeDB) {
+        volumenEfectos = effectsVolumeDB.toFloat()
+        volumenMusica = musicVolumeDB.toFloat()
+        // ¡IMPORTANTE! Asegurar que los reproductores usen los volúmenes de la DB al inicio
+        SoundPlayer.setEffectsVolume(volumenEfectos)
+        BackgroundMusicPlayer.setMusicVolume(volumenMusica)
+    }
+
+    DisposableEffect(Unit) {
+        BackgroundMusicPlayer.resumeMusic()
+        onDispose {
+            // No hacemos nada aquí.
+        }
+    }
+
     fun forceRecomposition() {
         refreshKey.value = refreshKey.value + 1
     }
 
-// Detectar idioma actual y seleccionar en el menú
+    // Detectar idioma actual y seleccionar en el menú
     LaunchedEffect(playerLanguage) {
         idiomaSeleccionado.value = if (playerLanguage == "es") "Español" else "English"
     }
@@ -87,7 +111,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                 )
                 IconButton(onClick = {
                     vibrationViewModel.vibrate(context)
-                    // Navega a la última pantalla visitada
+                    SoundPlayer.playSoundButton(context)
                     navController.navigate(navViewModel.lastScreen.value) {
                         popUpTo(AppScreens.Ajustes.route) { inclusive = true }
                     }
@@ -103,30 +127,47 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // VolumeSlider para efectos
+            // Sliders
             VolumeSlider(
                 label = localizedString(R.string.ajustes_volumen_efectos, playerLanguage),
-                value = volumenEfectos.value,
-                onValueChange = {
-                    volumenEfectos.value = round(it) // Redondear a entero
+                value = volumenEfectos,
+                onValueChange = { newValue ->
+                    // Guardamos el valor redondeado actual del slider
+                    val newRoundedValue = round(newValue).toInt()
+                    // Si el valor redondeado ha cambiado desde la última vez, vibra y suena
+                    if (newRoundedValue != volumenEfectos.toInt()) {
+                        vibrationViewModel.vibrate(context)
+                        SoundPlayer.playSoundButton(context)
+                    }
+                    volumenEfectos = newRoundedValue.toFloat()
+                    SoundPlayer.setEffectsVolume(volumenEfectos)
                 },
                 onValueChangeFinished = {
-                    volumenEfectos.value = round(volumenEfectos.value) // Asegura que se mantenga en enteros
-                    vibrationViewModel.vibrate(context)
+                    playerViewModel.updatePlayerEffectsVolume(volumenEfectos.toInt())
+                    // Ya no necesitas sonido/vibración aquí si ya lo hiciste en cada paso.
+                    // Si quieres un sonido/vibración final diferente, puedes mantenerlo.
                 },
                 fontFamily = fuentePixelBold
             )
 
-            // VolumeSlider para música
             VolumeSlider(
                 label = localizedString(R.string.ajustes_volumen_musica, playerLanguage),
-                value = volumenMusica.value,
-                onValueChange = {
-                    volumenMusica.value = round(it) // Redondear a entero
+                value = volumenMusica,
+                onValueChange = { newValue ->
+                    // Guardamos el valor redondeado actual del slider
+                    val newRoundedValue = round(newValue).toInt()
+                    // Si el valor redondeado ha cambiado desde la última vez, vibra y suena
+                    if (newRoundedValue != volumenMusica.toInt()) {
+                        vibrationViewModel.vibrate(context)
+                        SoundPlayer.playSoundButton(context)
+                    }
+                    volumenMusica = newRoundedValue.toFloat()
+                    BackgroundMusicPlayer.setMusicVolume(volumenMusica)
                 },
                 onValueChangeFinished = {
-                    volumenMusica.value = round(volumenMusica.value) // Asegura que se mantenga en enteros
-                    vibrationViewModel.vibrate(context)
+                    playerViewModel.updatePlayerMusicVolume(volumenMusica.toInt())
+                    // Ya no necesitas sonido/vibración aquí si ya lo hiciste en cada paso.
+                    // Si quieres un sonido/vibración final diferente, puedes mantenerlo.
                 },
                 fontFamily = fuentePixelBold
             )
@@ -148,6 +189,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                     onCheckedChange = { isChecked ->
                         vibrationViewModel.setVibracionActiva(isChecked)
                         vibrationViewModel.vibrate(context)
+                        SoundPlayer.playSoundButton(context)
                     },
                     modifier = Modifier.padding(start = 8.dp),
                     colors = CheckboxDefaults.colors(
@@ -208,6 +250,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
                                 },
                                 onClick = {
                                     vibrationViewModel.vibrate(context)
+                                    SoundPlayer.playSoundButton(context)
                                     val newLanguage = if (idioma == "Español") "es" else "en"
                                     playerViewModel.updateAppLanguage(context, newLanguage)
                                     forceRecomposition()
@@ -226,6 +269,7 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
             Button(
                 onClick = {
                     vibrationViewModel.vibrate(context)
+                    SoundPlayer.playSoundButton(context)
                     navController.navigate(route = AppScreens.MainScreen.route) {
                         popUpTo(AppScreens.MainScreen.route) { inclusive = false }
                     }
@@ -253,7 +297,6 @@ fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
     }
 }
 
-// Función VolumeSlider
 @Composable
 fun VolumeSlider(
     label: String,
@@ -264,19 +307,24 @@ fun VolumeSlider(
 ) {
     Column {
         Text(
-            text = "$label: ${value.toInt()}", // Muestra el valor actual como entero
+            text = "$label: ${value.toInt()}",
             color = Color.White,
             fontSize = 16.sp,
             fontFamily = fontFamily
         )
         Slider(
             value = value,
-            onValueChange = onValueChange,
+            onValueChange = { newValue ->
+                // NOTA IMPORTANTE: La lógica de vibración y sonido ahora está en Ajustes,
+                // usando el estado `volumenEfectos` y `volumenMusica` directamente.
+                // Esto permite acceder al contexto y ViewModels fácilmente.
+                onValueChange(newValue) // Pasa el valor al callback de Ajustes
+            },
             onValueChangeFinished = onValueChangeFinished,
             valueRange = 0f..10f,
-            steps = 9, // Ajuste para que el slider tenga 10 posiciones
+            steps = 9,
             colors = SliderDefaults.colors(
-                thumbColor = if (value == 0f) Color.Gray else Color.White, // Cambia el color de la bolita
+                thumbColor = if (value == 0f) Color.Gray else Color.White,
                 activeTrackColor = Color.White,
                 inactiveTrackColor = Color.Gray
             )

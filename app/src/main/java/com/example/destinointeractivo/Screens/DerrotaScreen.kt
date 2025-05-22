@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.destinointeractivo.BackgroundMusicPlayer
 import com.example.destinointeractivo.ButtonStyle
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
@@ -52,6 +53,15 @@ fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
     val playerMaxLife by playerViewModel.playerMaxLife.collectAsState(initial = 0)
     val playerPotionHealAmount by playerViewModel.playerPotionHealAmount.collectAsState(initial = 0)
     val playerLanguage by playerViewModel.playerLanguage.collectAsState()
+
+    DisposableEffect(Unit) {
+        // Reproducir la música de combate al entrar a esta pantalla
+        BackgroundMusicPlayer.playMusic(R.raw.music_derrota_02)
+        onDispose {
+            // No hacemos nada aquí. La música seguirá sonando si el usuario navega a otra pantalla.
+            // La pausa global la maneja BackgroundMusicPlayer cuando la app se va a segundo plano.
+        }
+    }
 
     // Estilo de los stats
     val spacerIcons = 4.dp

@@ -18,44 +18,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
-       //  Ocultar barras de navegación y notificaciones
+        //  Ocultar barras de navegación y notificaciones
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
-
-
-
-
         setContent {
             DestinoInteractivoTheme {
-
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 AppNavigation()
             }
-
         }
 
-
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)
-
     }
 
-
 }
-
-
 
 @Composable
 fun InitialScreen() {
     AppNavigation()
 }
-
-/*@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MyApplicationTheme {
-        Greeting("Android")
-    }
-}
- */

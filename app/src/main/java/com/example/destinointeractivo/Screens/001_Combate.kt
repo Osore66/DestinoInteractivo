@@ -25,7 +25,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.destinointeractivo.BarraEstado
 import com.example.destinointeractivo.EnemigoImagenyFondo
+/*
 import com.example.destinointeractivo.TextandButton
+
+ */
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
 import com.example.destinointeractivo.VibrationViewModel
@@ -73,6 +76,7 @@ fun Combate_001(
                     EnemigoImagenyFondo(R.drawable.paisaje, R.drawable.slime /* imgEnemigo = null */ )
                     Spacer(modifier = Modifier.height(8.dp))
                     // Texto de combate y botones de acción
+                    /*
                     TextandButton(
                         vibrationViewModel = vibrationViewModel,
                         fuentePixelBold = fuentePixelBold,
@@ -80,6 +84,8 @@ fun Combate_001(
                         customText = stringResource(id = R.string.ES_001_combate),
                         isAttackButtonEnabled = remember { mutableStateOf(true) }.value
                     )
+
+                     */
                 }
             }
         }

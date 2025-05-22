@@ -14,7 +14,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -22,9 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.destinointeractivo.BackgroundMusicPlayer
 import com.example.destinointeractivo.ButtonStyle
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
+import com.example.destinointeractivo.SoundPlayer
 import com.example.destinointeractivo.StatsStyle
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.localizedString
@@ -49,6 +50,15 @@ fun SinMetodos_Combate(
     val playerViewModel: PlayerViewModel = viewModel()
 
     val enemyId = 1
+
+    DisposableEffect(Unit) {
+        // Reproducir la música de combate al entrar a esta pantalla
+        BackgroundMusicPlayer.playMusic(R.raw.music_battlemusic_01)
+        onDispose {
+            // No hacemos nada aquí. La música seguirá sonando si el usuario navega a otra pantalla.
+            // La pausa global la maneja BackgroundMusicPlayer cuando la app se va a segundo plano.
+        }
+    }
 
     LaunchedEffect(enemyId) {
         enemyViewModel.loadEnemyData(enemyId)
@@ -203,6 +213,7 @@ fun SinMetodos_Combate(
                     }
                     IconButton(onClick = {
                         vibrationViewModel.vibrate(context)
+                        SoundPlayer.playSoundButton(context)
                         navController.navigate(route = AppScreens.Ajustes.route)
                     }) {
                         Icon(
@@ -305,20 +316,23 @@ fun SinMetodos_Combate(
                                 .fillMaxWidth()
                                 .padding(bottom = 32.dp)
                         ) {
-                            ButtonStyle(text = localizedString(R.string.combate_atacar, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled) {
+                            ButtonStyle(text = localizedString(R.string.combate_atacar, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled, onClick = {
                                 vibrationViewModel.vibrate(context)
+                                SoundPlayer.playSoundButton(context) // 🔊 Sonido del botón
                                 onPlayerAttack()
-                            }
+                            })
                             Spacer(modifier = Modifier.height(8.dp))
-                            ButtonStyle(text = localizedString(R.string.combate_defender, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled) {
+                            ButtonStyle(text = localizedString(R.string.combate_defender, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled, onClick = {
                                 vibrationViewModel.vibrate(context)
+                                SoundPlayer.playSoundButton(context) // 🔊 Sonido del botón
                                 onDefend()
-                            }
+                            })
                             Spacer(modifier = Modifier.height(8.dp))
-                            ButtonStyle(text = localizedString(R.string.combate_pocion, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled) {
+                            ButtonStyle(text = localizedString(R.string.combate_pocion, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled, onClick = {
                                 vibrationViewModel.vibrate(context)
+                                SoundPlayer.playSoundButton(context) // 🔊 Sonido del botón
                                 onUsePotion()
-                            }
+                            })
                         }
                     }
                 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.destinointeractivo.BackgroundMusicPlayer
 import com.example.destinointeractivo.ButtonStyle
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
@@ -53,6 +54,15 @@ fun VictoriaScreen(navController: NavController, navViewModel: NavViewModel) {
 
     // Estilo de los stats
     val spacerIcons = 4.dp
+
+    DisposableEffect(Unit) {
+        // Reproducir la música de combate al entrar a esta pantalla
+        BackgroundMusicPlayer.playMusic(R.raw.music_win)
+        onDispose {
+            // No hacemos nada aquí. La música seguirá sonando si el usuario navega a otra pantalla.
+            // La pausa global la maneja BackgroundMusicPlayer cuando la app se va a segundo plano.
+        }
+    }
 
     Scaffold(
         topBar = {
