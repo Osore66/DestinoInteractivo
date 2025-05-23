@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 
 object BackgroundMusicPlayer : LifecycleObserver {
     private var mediaPlayer: MediaPlayer? = null
+    private var volume = 1f
     private var currentMusicResId = -1
     private var isMuted = false
-    private var volume = 1f // Este es el volumen interno, ahora se actualizará externamente (0.0 a 1.0)
     private var currentPlaybackPosition = 0
     private var applicationContext: Context? = null
 

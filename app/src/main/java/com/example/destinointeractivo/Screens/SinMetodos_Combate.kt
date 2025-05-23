@@ -83,7 +83,6 @@ fun SinMetodos_Combate(
     val enemyTurnCount by playerViewModel.enemyTurnCount.collectAsState(initial = 0)
 
     val coroutineScope = rememberCoroutineScope()
-    //var enemyTurnCount by remember { mutableIntStateOf(0) }
     var areButtonsEnabled by remember { mutableStateOf(true) } // Cooldown global
     val playerLanguage by playerViewModel.playerLanguage.collectAsState()
 
@@ -106,12 +105,17 @@ fun SinMetodos_Combate(
 
             // Vibración simple o doble
             if (!isCritical) {
+                //Meter sonido de recibir daño
+                SoundPlayer.playSoundHit(context)
                 vibrationViewModel.vibrate(context)
             } else {
                 coroutineScope.launch {
+                    SoundPlayer.playSoundHitCrit(context)
                     vibrationViewModel.vibrate(context)
+                    /* //Segunda vibración
                     delay(100)
                     vibrationViewModel.vibrate(context)
+                     */
                 }
             }
 
@@ -133,6 +137,7 @@ fun SinMetodos_Combate(
             enemyViewModel.updateEnemyLife(enemyId, newEnemyLife)
 
             coroutineScope.launch {
+                SoundPlayer.playSoundAttack(context) // Sonido de ataque del jugador
                 delay(300)
                 if (newEnemyLife <= 0) {
                     // Navegar a VictoriaScreen
@@ -158,6 +163,23 @@ fun SinMetodos_Combate(
             coroutineScope.launch {
                 val currentTurnCount = playerViewModel.enemyTurnCount.value + 1
                 playerViewModel.updateEnemyTurnCount(currentTurnCount)
+
+                // Determinar si el ataque del enemigo sería crítico en este turno
+                val isCriticalAttackIncoming = enemyCritFreq > 0 && (currentTurnCount % enemyCritFreq == 0)
+
+                // Sonido y animación basados en si se bloquea un crítico o no
+                if (isCriticalAttackIncoming) {
+                    SoundPlayer.playSoundShieldCrit(context) // 🔊 Sonido de bloqueo crítico
+                    vibrationViewModel.vibrate(context)
+                    /* //Segunda vibración
+                    delay(100)
+                    vibrationViewModel.vibrate(context)
+                     */
+                } else {
+                    SoundPlayer.playSoundShield(context) // 🔊 Sonido de bloqueo normal
+                    vibrationViewModel.vibrate(context)
+                }
+
                 delay(600) // Cooldown global
                 areButtonsEnabled = true
             }
@@ -173,6 +195,7 @@ fun SinMetodos_Combate(
             playerViewModel.updatePlayerPotions(newPotions)
 
             coroutineScope.launch {
+                SoundPlayer.playSoundPotion(context)
                 delay(300)
                 onEnemyAttack()
                 delay(300) // Total 600ms
@@ -318,19 +341,16 @@ fun SinMetodos_Combate(
                         ) {
                             ButtonStyle(text = localizedString(R.string.combate_atacar, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled, onClick = {
                                 vibrationViewModel.vibrate(context)
-                                SoundPlayer.playSoundButton(context) // 🔊 Sonido del botón
-                                onPlayerAttack()
+                                onPlayerAttack() // SoundPlayer.playSoundAttack(context) ahora se llama dentro de onPlayerAttack
                             })
                             Spacer(modifier = Modifier.height(8.dp))
                             ButtonStyle(text = localizedString(R.string.combate_defender, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled, onClick = {
                                 vibrationViewModel.vibrate(context)
-                                SoundPlayer.playSoundButton(context) // 🔊 Sonido del botón
                                 onDefend()
                             })
                             Spacer(modifier = Modifier.height(8.dp))
                             ButtonStyle(text = localizedString(R.string.combate_pocion, playerLanguage), fontFamily = fuentePixelBold, enabled = areButtonsEnabled, onClick = {
                                 vibrationViewModel.vibrate(context)
-                                SoundPlayer.playSoundButton(context) // 🔊 Sonido del botón
                                 onUsePotion()
                             })
                         }
@@ -340,4 +360,3 @@ fun SinMetodos_Combate(
         }
     )
 }
-

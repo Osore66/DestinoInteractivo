@@ -21,6 +21,7 @@ import com.example.destinointeractivo.BackgroundMusicPlayer
 import com.example.destinointeractivo.ButtonStyle
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
+import com.example.destinointeractivo.SoundPlayer
 import com.example.destinointeractivo.StatsStyle
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.VibrationViewModelFactory
@@ -57,7 +58,7 @@ fun VictoriaScreen(navController: NavController, navViewModel: NavViewModel) {
 
     DisposableEffect(Unit) {
         // Reproducir la música de combate al entrar a esta pantalla
-        BackgroundMusicPlayer.playMusic(R.raw.music_win)
+        BackgroundMusicPlayer.playMusic(R.raw.music_victory)
         onDispose {
             // No hacemos nada aquí. La música seguirá sonando si el usuario navega a otra pantalla.
             // La pausa global la maneja BackgroundMusicPlayer cuando la app se va a segundo plano.
@@ -99,6 +100,7 @@ fun VictoriaScreen(navController: NavController, navViewModel: NavViewModel) {
                     IconButton(
                         onClick = {
                             vibrationViewModel.vibrate(context)
+                            SoundPlayer.playSoundButton(context)
                             navController.navigate(route = AppScreens.Ajustes.route)
                         }
                     ) {
@@ -155,6 +157,7 @@ fun VictoriaScreen(navController: NavController, navViewModel: NavViewModel) {
                                     playerViewModel.resetPlayerDataWithDefaultSettings()
                                     enemyViewModel.resetEnemyData()
                                 }
+                                SoundPlayer.playSoundButton(context)
                                 navController.navigate(route = AppScreens.MainScreen.route)
                             }
                         }

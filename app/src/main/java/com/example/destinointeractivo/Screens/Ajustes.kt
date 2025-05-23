@@ -315,9 +315,6 @@ fun VolumeSlider(
         Slider(
             value = value,
             onValueChange = { newValue ->
-                // NOTA IMPORTANTE: La lógica de vibración y sonido ahora está en Ajustes,
-                // usando el estado `volumenEfectos` y `volumenMusica` directamente.
-                // Esto permite acceder al contexto y ViewModels fácilmente.
                 onValueChange(newValue) // Pasa el valor al callback de Ajustes
             },
             onValueChangeFinished = onValueChangeFinished,

@@ -22,6 +22,7 @@ import com.example.destinointeractivo.BackgroundMusicPlayer
 import com.example.destinointeractivo.ButtonStyle
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
+import com.example.destinointeractivo.SoundPlayer
 import com.example.destinointeractivo.StatsStyle
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.VibrationViewModelFactory
@@ -101,6 +102,7 @@ fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
                     IconButton(
                         onClick = {
                             vibrationViewModel.vibrate(context)
+                            SoundPlayer.playSoundButton(context)
                             navController.navigate(route = AppScreens.Ajustes.route)
                         }
                     ) {
@@ -158,6 +160,7 @@ fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
                                     playerViewModel.resetPlayerDataWithDefaultSettings()
                                     enemyViewModel.resetEnemyData()
                                 }
+                                SoundPlayer.playSoundButton(context)
                                 navController.navigate(route = AppScreens.MainScreen.route)
                             }
                         }
