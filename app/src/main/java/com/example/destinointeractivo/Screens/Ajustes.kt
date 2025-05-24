@@ -36,9 +36,7 @@ import com.example.destinointeractivo.stringMap
 @Composable
 fun Ajustes(navController: NavController, navViewModel: NavViewModel) {
 
-    BackHandler {
-        // Evita el retroceso
-    }
+    BackHandler { /* Evita retroceso */ }
     val context = LocalContext.current
     val vibrationViewModel: VibrationViewModel = viewModel(
         factory = VibrationViewModelFactory(context)

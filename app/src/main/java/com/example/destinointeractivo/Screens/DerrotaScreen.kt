@@ -2,6 +2,7 @@ package com.example.destinointeractivo.Screens
 
 import android.content.Context
 import android.os.Build
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
+    BackHandler { /* Evita retroceso */ }
     val context = LocalContext.current
     val vibrationViewModel: VibrationViewModel = viewModel(factory = VibrationViewModelFactory(context))
     val playerViewModel: PlayerViewModel = viewModel()

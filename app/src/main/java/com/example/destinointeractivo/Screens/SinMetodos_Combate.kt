@@ -40,6 +40,7 @@ fun SinMetodos_Combate(
     navController: NavController,
     navViewModel: NavViewModel,
 ) {
+    BackHandler { /* Evita retroceso */ }
     val context = LocalContext.current
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
@@ -250,7 +251,6 @@ fun SinMetodos_Combate(
             }
         },
         content = { innerPadding ->
-            BackHandler { }
             Box(
                 modifier = Modifier
                     .fillMaxSize()
