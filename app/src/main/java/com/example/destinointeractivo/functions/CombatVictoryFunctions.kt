@@ -77,21 +77,6 @@ data class VictoryScreenData(
     val rewardOptions: List<VictoryRewardOption> // Lista de opciones de recompensa
 )
 
-/**
- * Maneja la lógica común al hacer clic en un botón de recompensa de victoria.
- *
- * @param navController NavController para la navegación.
- * @param vibrationViewModel ViewModel para la vibración del dispositivo.
- * @param playerViewModel ViewModel para la lógica del jugador.
- * @param context Contexto de la aplicación.
- * @param coroutineScope CoroutineScope para lanzar coroutines.
- * @param areButtonsEnabled Estado mutable para habilitar/deshabilitar botones.
- * @param rewardAnimationAmountText Estado mutable para el texto de la animación flotante.
- * @param showRewardAnimationState **MutableState<Boolean>** de la animación flotante (para el stat específico).
- * @param amount Cantidad a aumentar en la estadística.
- * @param statType Tipo de estadística a aumentar (DAMAGE, DEFENSE, POTION, POTION_HEAL_AMOUNT).
- * @param nextScreenRoute Ruta a la siguiente pantalla después de la recompensa.
- */
 fun handleVictoryRewardButtonClick(
     navController: NavController,
     vibrationViewModel: VibrationViewModel,
@@ -133,13 +118,6 @@ fun handleVictoryRewardButtonClick(
     }
 }
 
-/**
- * Composable genérico para mostrar una pantalla de victoria con opciones de recompensa.
- *
- * @param navController El NavController para la navegación.
- * @param navViewModel El NavViewModel para la gestión de la navegación.
- * @param victoryData Los datos específicos para configurar esta pantalla de victoria.
- */
 @Composable
 fun VictoryScreenLayout(
     navController: NavController,

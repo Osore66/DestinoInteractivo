@@ -56,7 +56,7 @@ data class WeaponSelectionScreenData(
     val weaponOptions: List<WeaponOption> // Lista de opciones de armas
 )
 
-// Función de manejo de botones (con la actualización de lastScreen)
+// Función de manejo de botones
 fun handleWeaponSelectionButtonClick(
     navController: NavController,
     vibrationViewModel: VibrationViewModel,

@@ -39,9 +39,8 @@ fun FloatingText(
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
 
     LaunchedEffect(Unit) {
-        // En cuanto el composable entra en el árbol, disparamos el cambio del targetValue
-        // Esto hará que la animación se dispare desde 0f/1f hacia el nuevo target
-        targetOffsetY = -70f // Recorre menos espacio vertical hacia arriba
+        // Esto hará que la animación se dispare desde 0f/1f hacia 0f
+        targetOffsetY = -70f // Recorre espacio vertical hacia arriba
         targetAlpha = 0f // Se desvanece
         delay(animationDuration.toLong()) // Espera a que termine la animación
         onAnimationEnd() // Notifica al padre que la animación ha terminado
