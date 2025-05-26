@@ -22,7 +22,7 @@ fun Combat_003_Victory(
     // Define los datos específicos para esta pantalla de victoria
     val victoryData = remember {
         VictoryScreenData(
-            messageTextResId = R.string.victoria_001_message,
+            messageTextResId = R.string.victoria_003_message,
             nextLevelRoute = AppScreens.Combat_004.route,
             rewardOptions = listOf(
                 VictoryRewardOption(R.string.victoria_001_damage, 1, StatType.DAMAGE),

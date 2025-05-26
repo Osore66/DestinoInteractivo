@@ -20,13 +20,9 @@ fun Combat_002_Victory(
     BackHandler { /* Evita retroceso */ }
 
     // Define los datos específicos para esta pantalla de victoria
-    val damage = 2
-    val shield = 1
-    val potion = 1
-    val heal = 15
     val victoryData = remember {
         VictoryScreenData(
-            messageTextResId = R.string.victoria_001_message,
+            messageTextResId = R.string.victoria_002_message,
             nextLevelRoute = AppScreens.Combat_003.route,
             rewardOptions = listOf(
                 VictoryRewardOption(R.string.victoria_002_damage, 2, StatType.DAMAGE),
