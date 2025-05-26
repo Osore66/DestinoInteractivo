@@ -6,27 +6,27 @@ object InitialData {
     @Suppress(RoomWarnings.CURSOR_MISMATCH)
     val defaultPlayer = Player(
         id = 1,
-        currentLife = 10,
-        maxLife = 10,
-        damage = 2,
+        currentLife = 50,
+        maxLife = 50,
+        damage = 5,
         defense = 1,
         potions = 2,
-        potionHealAmount = 5,
+        potionHealAmount = 25,
         effectsVolume = 5,
         musicVolume = 5,
         vibrationEnabled = true,
         language = "es",
-        lastLevel = "SinMetodos_Combate",
+        lastLevel = "WeaponSelectionScreen",
         enemyTurnCount = 0
     )
 
     val enemyList = listOf(
-        Enemy(id = 1, currentLife = 10, maxLife = 10, damage = 2, defense = 1, nivel = "Combate_1", critFreq = 2),
-        Enemy(id = 2, currentLife = 15, maxLife = 15, damage = 3, defense = 0, nivel = "Combate_2", critFreq = 3),
-        Enemy(id = 3, currentLife = 20, maxLife = 20, damage = 4, defense = 1, nivel = "Combate_3", critFreq = 3),
-        Enemy(id = 4, currentLife = 20, maxLife = 20, damage = 4, defense = 1, nivel = "Combate_4", critFreq = 3),
-        Enemy(id = 5, currentLife = 8, maxLife = 8, damage = 1, defense = 2, nivel = "Tutorial", critFreq = 2),
-        Enemy(id = 6, currentLife = 8, maxLife = 8, damage = 1, defense = 2, nivel = "TutorialDificil", critFreq = 2),
-        Enemy(id = 7, currentLife = 20, maxLife = 20, damage = 4, defense = 1, nivel = "Jefe_Final", critFreq = 3)
+        Enemy(id = 1, currentLife = 25, maxLife = 25, damage = 3, defense = 0, nivel = "Combat_001", critFreq = 4),
+        Enemy(id = 2, currentLife = 30, maxLife = 30, damage = 4, defense = 1, nivel = "Combat_002", critFreq = 4),
+        Enemy(id = 3, currentLife = 35, maxLife = 35, damage = 4, defense = 1, nivel = "Combat_003", critFreq = 4),
+        Enemy(id = 4, currentLife = 40, maxLife = 40, damage = 5, defense = 2, nivel = "Combat_004", critFreq = 3),
+        Enemy(id = 5, currentLife = 50, maxLife = 50, damage = 7, defense = 3, nivel = "Combat_005", critFreq = 3),
+        Enemy(id = 6, currentLife = 8, maxLife = 8, damage = 1, defense = 2, nivel = "Combat_006", critFreq = 2),
+        Enemy(id = 7, currentLife = 20, maxLife = 20, damage = 4, defense = 1, nivel = "Combat_007", critFreq = 3)
     )
 }

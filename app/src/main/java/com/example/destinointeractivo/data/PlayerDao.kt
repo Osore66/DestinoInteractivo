@@ -48,6 +48,8 @@ interface PlayerDao {
     @Query("UPDATE player SET enemyTurnCount = :turnCount WHERE id = 1")
     suspend fun updateEnemyTurnCount(turnCount: Int)
 
+    @Query("UPDATE player SET potionHealAmount = :newHealAmount WHERE id = 1")
+    suspend fun updatePotionHealAmount(newHealAmount: Int)
 
     // --- Consultas auxiliares ---
     @Query("SELECT potionHealAmount FROM player WHERE id = 1")
@@ -56,5 +58,10 @@ interface PlayerDao {
     @Query("SELECT effectsVolume, musicVolume, vibrationEnabled, language FROM player WHERE id = 1")
     suspend fun getPlayerSettings(): PlayerSettings
 
-}
+    // --- Nuevos métodos para incrementar estadísticas ---
+    @Query("UPDATE player SET damage = :newDamage WHERE id = 1")
+    suspend fun updateDamage(newDamage: Int)
 
+    @Query("UPDATE player SET defense = :newDefense WHERE id = 1")
+    suspend fun updateDefense(newDefense: Int)
+}

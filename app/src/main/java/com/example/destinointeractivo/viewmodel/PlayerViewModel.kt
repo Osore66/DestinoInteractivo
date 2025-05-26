@@ -2,7 +2,6 @@ package com.example.destinointeractivo.viewmodel
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.destinointeractivo.data.AppDatabase
@@ -53,6 +52,11 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
     private val _enemyTurnCount = MutableStateFlow(0)
     val enemyTurnCount: StateFlow<Int> = _enemyTurnCount
 
+    // Añadido: StateFlow para lastLevel
+    private val _lastLevel = MutableStateFlow("")
+    val lastLevel: StateFlow<String> = _lastLevel
+
+
     init {
         database = AppDatabase.getDatabase(application, viewModelScope)
         playerDao = database.playerDao()
@@ -74,6 +78,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
                     _playerVibrationEnabled.value = player.vibrationEnabled
                     _playerLanguage.value = player.language
                     _enemyTurnCount.value = player.enemyTurnCount
+                    _lastLevel.value = player.lastLevel // Actualiza lastLevel al cargar datos
                 }
             }
         }
@@ -95,7 +100,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     fun updatePlayerPotionHealAmount(newPotionHealAmount: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            playerDao.updatePotions(newPotionHealAmount)
+            playerDao.updatePotions(newPotionHealAmount) // Nota: Esto actualiza el campo 'potions' en la DB, ¿es un error tipográfico?
             _playerPotionHealAmount.value = newPotionHealAmount
         }
     }
@@ -139,6 +144,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
     fun updateLastLevel(newLevel: String) {
         viewModelScope.launch(Dispatchers.IO) {
             playerDao.updateLastLevel(newLevel)
+            _lastLevel.value = newLevel // Actualiza también el StateFlow para la UI
         }
     }
 
@@ -157,7 +163,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
             musicVolume = settings.musicVolume,
             vibrationEnabled = settings.vibrationEnabled,
             language = settings.language,
-            lastLevel = "SinMetodos_Combate"
+            lastLevel = "SinMetodos_Combate" // Considera si quieres que esto sea dinámico o fijo
         )
         playerDao.deleteAllPlayers()
         playerDao.insert(defaultPlayer)
@@ -168,7 +174,8 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
             effectsVolume = 5,
             musicVolume = 5,
             vibrationEnabled = true,
-            language = "es"
+            language = "es",
+            lastLevel = "SinMetodos_Combate" // Asegúrate de que esto se inicialice correctamente también
         )
         playerDao.deleteAllPlayers()
         playerDao.insert(defaultPlayer)
@@ -180,7 +187,8 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
             effectsVolume = 5,
             musicVolume = 5,
             vibrationEnabled = true,
-            language = "es"
+            language = "es",
+            lastLevel = "SinMetodos_Combate" // Y aquí también
         ))
     }
 
@@ -212,5 +220,57 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    // --- Nuevos métodos para incrementar estadísticas ---
 
+    /**
+     * Incrementa el daño del jugador y actualiza la base de datos.
+     * @param amount La cantidad a incrementar.
+     */
+    fun increasePlayerDamage(amount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentDamage = playerDamage.value
+            val newDamage = currentDamage + amount
+            playerDao.updateDamage(newDamage) // Asume que tienes un método updateDamage en PlayerDao
+            _playerDamage.value = newDamage
+        }
+    }
+
+    /**
+     * Incrementa la defensa del jugador y actualiza la base de datos.
+     * @param amount La cantidad a incrementar.
+     */
+    fun increasePlayerDefense(amount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentDefense = playerDefense.value
+            val newDefense = currentDefense + amount
+            playerDao.updateDefense(newDefense) // Asume que tienes un método updateDefense en PlayerDao
+            _playerDefense.value = newDefense
+        }
+    }
+
+    /**
+     * Incrementa la cantidad de pociones del jugador y actualiza la base de datos.
+     * @param amount La cantidad a incrementar.
+     */
+    fun increasePlayerPotions(amount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentPotions = playerPotions.value
+            val newPotions = currentPotions + amount
+            playerDao.updatePotions(newPotions) // Ya tienes este método updatePotions
+            _playerPotions.value = newPotions
+        }
+    }
+
+    /**
+     * Incrementa la cantidad de curación de las pociones del jugador y actualiza la base de datos.
+     * @param amount La cantidad a incrementar.
+     */
+    fun increasePlayerPotionHealAmount(amount: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val currentHealAmount = playerPotionHealAmount.value
+            val newHealAmount = currentHealAmount + amount
+            playerDao.updatePotionHealAmount(newHealAmount) // Asume que tienes un método updatePotionHealAmount en PlayerDao
+            _playerPotionHealAmount.value = newHealAmount
+        }
+    }
 }

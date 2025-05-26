@@ -13,7 +13,7 @@ android {
         minSdk = 24
         targetSdk = 34 // Puedes mantener targetSdk en 34 o subirlo a 35 si quieres.
         // Para este error, solo necesitas cambiar compileSdk.
-        versionCode = 5
+        versionCode = 7
         versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

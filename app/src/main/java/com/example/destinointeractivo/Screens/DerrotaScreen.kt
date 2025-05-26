@@ -1,7 +1,6 @@
 package com.example.destinointeractivo.Screens
 
 import android.content.Context
-import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -24,15 +23,16 @@ import com.example.destinointeractivo.ButtonStyle
 import com.example.destinointeractivo.NavViewModel
 import com.example.destinointeractivo.R
 import com.example.destinointeractivo.SoundPlayer
-import com.example.destinointeractivo.StatsStyle
 import com.example.destinointeractivo.VibrationViewModel
 import com.example.destinointeractivo.VibrationViewModelFactory
 import com.example.destinointeractivo.localizedString
 import com.example.destinointeractivo.navigation.AppScreens
 import com.example.destinointeractivo.viewmodel.EnemyViewModel
 import com.example.destinointeractivo.viewmodel.PlayerViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+
+// Importa la nueva función PlayerStatusBar desde el paquete correcto
+import com.example.destinointeractivo.PlayerStatusBar
+
 import kotlinx.coroutines.launch
 
 @Composable
@@ -45,81 +45,26 @@ fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
 
     navViewModel.lastScreen.value = AppScreens.DerrotaScreen.route
 
-    // Carga las fuentes y datos iniciales
+    // Carga las fuentes
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
-
-    // Observar datos del jugador
-    val playerLife by playerViewModel.playerLife.collectAsState(initial = 0)
-    val playerDamage by playerViewModel.playerDamage.collectAsState(initial = 0)
-    val playerDefense by playerViewModel.playerDefense.collectAsState(initial = 0)
-    val playerPotions by playerViewModel.playerPotions.collectAsState(initial = 0)
-    val playerMaxLife by playerViewModel.playerMaxLife.collectAsState(initial = 0)
-    val playerPotionHealAmount by playerViewModel.playerPotionHealAmount.collectAsState(initial = 0)
-    val playerLanguage by playerViewModel.playerLanguage.collectAsState()
 
     DisposableEffect(Unit) {
         // Reproducir la música de combate al entrar a esta pantalla
         BackgroundMusicPlayer.playMusic(R.raw.music_derrota_02)
         onDispose {
             // No hacemos nada aquí. La música seguirá sonando si el usuario navega a otra pantalla.
-            // La pausa global la maneja BackgroundMusicPlayer cuando la app se va a segundo plano.
         }
     }
 
-    // Estilo de los stats
-    val spacerIcons = 4.dp
-
     Scaffold(
         topBar = {
-            Column {
-                // Barra de estado superior (con stats y ajustes)
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(colorResource(id = R.color.VeryDarkGrey))
-                        .padding(start = 16.dp, end = 16.dp, top = 40.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    // Stats del jugador (vida, defensa, pociones)
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        StatsStyle(
-                            iconRes = R.drawable.corazon,
-                            text = "$playerLife/$playerMaxLife",
-                            size = 25.dp
-                        )
-                        Spacer(modifier = Modifier.width(spacerIcons))
-                        StatsStyle(iconRes = R.drawable.espada, text = "$playerDamage", size = 23.dp)
-                        Spacer(modifier = Modifier.width(spacerIcons))
-                        StatsStyle(iconRes = R.drawable.escudo, text = "$playerDefense", size = 30.dp)
-                        Spacer(modifier = Modifier.width(spacerIcons))
-                        //Cantidad pociones
-                        StatsStyle(iconRes = R.drawable.potion, text = "$playerPotions", size = 23.dp)
-                        Spacer(modifier = Modifier.width(spacerIcons))
-                        //Cantidad curación
-                        StatsStyle(iconRes = R.drawable.healpotion, text = "$playerPotionHealAmount", size = 23.dp)
-                    }
-
-                    // Botón de ajustes (engranaje)
-                    IconButton(
-                        onClick = {
-                            vibrationViewModel.vibrate(context)
-                            SoundPlayer.playSoundButton(context)
-                            navController.navigate(route = AppScreens.Ajustes.route)
-                        }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.settings_icon),
-                            contentDescription = "Settings",
-                            tint = Color.White,
-                            modifier = Modifier.size(30.dp)
-                        )
-                    }
-                }
-
-                // Espaciado inferior
-                Spacer(modifier = Modifier.height(10.dp))
-            }
+            // Llama a la nueva función PlayerStatusBar
+            PlayerStatusBar(
+                navController = navController,
+                vibrationViewModel = vibrationViewModel,
+                playerViewModel = playerViewModel, // Pasa la instancia del PlayerViewModel
+                context = context
+            )
         },
         content = { innerPadding ->
             Box(
@@ -136,7 +81,7 @@ fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = localizedString(R.string.derrota_mensaje, playerLanguage),
+                        text = localizedString(R.string.derrota_mensaje, playerViewModel.playerLanguage.collectAsState().value),
                         fontFamily = fuentePixelBold,
                         fontSize = 40.sp,
                         color = Color.White,
@@ -148,7 +93,7 @@ fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
 
                     // Botón "Reiniciar" usando ButtonStyle
                     ButtonStyle(
-                        text = localizedString(R.string.combate_reiniciar, playerLanguage),
+                        text = localizedString(R.string.combate_reiniciar, playerViewModel.playerLanguage.collectAsState().value),
                         fontFamily = fuentePixelBold,
                         enabled = true,
                         onClick = {

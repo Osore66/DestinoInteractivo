@@ -1,53 +1,62 @@
+// MyApplication.kt
 package com.example.destinointeractivo
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.example.destinointeractivo.data.AppDatabase
 import com.example.destinointeractivo.data.PlayerDao
-// No necesitas PlayerViewModel si solo accedes a datos del DAO
-// import com.example.destinointeractivo.viewmodel.PlayerViewModel
 
-import kotlinx.coroutines.GlobalScope // ¡Necesitas esta importación!
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch // ¡Necesitas esta importación!
+import kotlinx.coroutines.launch
 
 class MyApplication : Application() {
 
     private lateinit var playerDao: PlayerDao
 
+    companion object {
+        // Renombramos la propiedad para evitar confusión y usamos un "backing field"
+        // para asegurarnos de que solo se asigne una vez y sea lateinit
+        private lateinit var _applicationContext: Context
+        val applicationContext: Context
+            get() = _applicationContext
+    }
+
     override fun onCreate() {
         super.onCreate()
+        // Asigna el contexto de la aplicación al backing field
+        _applicationContext = this.applicationContext // ¡Aquí está la asignación correcta!
+
         Log.d("MyApplication", "Application onCreate: Initializing SoundPlayer and BackgroundMusicPlayer.")
 
         SoundPlayer.init(this)
         BackgroundMusicPlayer.initialize(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(BackgroundMusicPlayer)
 
-        // CAMBIO CLAVE AQUÍ: Pasando GlobalScope
         playerDao = AppDatabase.getDatabase(this, GlobalScope).playerDao()
 
-        // El resto de tu corrutina para cargar volúmenes
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 val settings = playerDao.getPlayerSettings()
                 if (settings != null) {
-                    val musicVolume = settings.musicVolume.toFloat()
-                    val effectsVolume = settings.effectsVolume.toFloat()
+                    val musicVolumeInt = settings.musicVolume
+                    val effectsVolumeInt = settings.effectsVolume
 
-                    Log.d("MyApplication", "Loaded volumes from DB: Music=$musicVolume, Effects=$effectsVolume")
+                    Log.d("MyApplication", "Loaded volumes from DB: Music=$musicVolumeInt, Effects=$effectsVolumeInt")
 
-                    BackgroundMusicPlayer.setMusicVolume(musicVolume)
-                    SoundPlayer.setEffectsVolume(effectsVolume)
+                    BackgroundMusicPlayer.setMusicVolume(musicVolumeInt)
+                    SoundPlayer.setEffectsVolume(effectsVolumeInt.toFloat())
                 } else {
-                    Log.d("MyApplication", "No player settings found in DB. Using default volumes.")
-                    BackgroundMusicPlayer.setMusicVolume(10f)
-                    SoundPlayer.setEffectsVolume(10f)
+                    Log.d("MyApplication", "No player settings found in DB. Using default volumes (5).")
+                    BackgroundMusicPlayer.setMusicVolume(5)
+                    SoundPlayer.setEffectsVolume(5f)
                 }
             } catch (e: Exception) {
                 Log.e("MyApplication", "Error loading player settings on startup: ${e.message}")
-                BackgroundMusicPlayer.setMusicVolume(10f)
-                SoundPlayer.setEffectsVolume(10f)
+                BackgroundMusicPlayer.setMusicVolume(5)
+                SoundPlayer.setEffectsVolume(5f)
             }
         }
     }

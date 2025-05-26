@@ -31,4 +31,18 @@
     <string name="combate_defender">Defend</string>
     <string name="combate_pocion">Potion</string>
     <string name="combate_reiniciar">Try again</string>
+
+    <!-- Victoria Combate -->
+    <string name="victoria_001_message">You have won the combat, choose a reward:</string>
+    <string name="victoria_001_damage">+1 Damage</string>
+    <string name="victoria_001_shield">+1 Shield</string>
+    <string name="victoria_001_potion">+1 Potion</string>
+    <string name="victoria_001_heal">+15 Potion Heal</string>
+
+    <!--Elección armas -->
+    <string name="weapon_selection_message">Choose your starting weapon:</string>
+    <string name="weapon_mandoble">Greatsword:\n+2 Damage</string>
+    <string name="weapon_espada_escudo">Sword and Shield:\n+1 Damage, +1 Shield</string>
+    <string name="weapon_escudo_pesado">Heavy Shield:\n+2 Shield</string>
+
 </resources>
