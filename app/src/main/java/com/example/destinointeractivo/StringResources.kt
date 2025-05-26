@@ -1,8 +1,5 @@
 package com.example.destinointeractivo
 
-import androidx.compose.ui.res.stringResource
-import com.example.destinointeractivo.R
-
 // Mapeo dinámico de strings por idioma
 val stringMap = mapOf(
     "es" to mapOf<Int, String>(
@@ -25,12 +22,16 @@ val stringMap = mapOf(
         R.string.combate_atacar to "Atacar",
         R.string.combate_defender to "Defender",
         R.string.combate_pocion to "Poción",
-        R.string.ES_001_combate to "Te topas con un travieso enemigo que te impide avanzar, no parece muy peligroso, ¿qué decides hacer? Ten en cuenta que puedes morir y tener que empezar de nuevo.",
+        R.string.combate_001 to "Te encuentras frente a un goblin que bloquea tu camino; aunque no parece muy peligroso, no debes confiarte. ¿Qué decides hacer?",
+        R.string.combate_002 to "Te cruzas con un sombrío individuo cuyo hacha parece tener sed se sangre; su presencia oscura te pone los pelos de punta. ¿Cómo decides actuar?",
+        R.string.combate_003 to "Te enfrentas cara a cara con un poderoso dragón cuya sola respiración hace temblar el suelo. Su mirada desafía tu valentía. ¿Qué haces",
+        R.string.combate_004 to "Un enemigo imponente y lleno de misterio aparece ante ti, claramente preparado para tu llegada. Su presencia es una amenaza real a tu seguridad. ¿Qué piensas hacer?",
+        R.string.combate_005 to "Un ser oscuro y sobrenatural, surgido de un reino prohibido, se interpone entre tú y tu destino final. Este es el desafío definitivo. ¿Cómo piensas actuar?",
         R.string.combate_reiniciar to "Volver a empezar",
 
         // Mensajes de Victoria/Derrota
-        R.string.victoria_mensaje to "¡Has ganado!",
-        R.string.derrota_mensaje to "¡Has sido derrotado!",
+        R.string.victoria_mensaje to "¡Has vencido! Ahora puedes tomar nuevos caminos y probar otras opciones. ¿Te atreves a volver a comenzar?",
+        R.string.derrota_mensaje to "¡Derrotado! Tu aventura termina aquí. Todo se reiniciará… pero siempre puedes intentarlo de nuevo.",
 
         // Recompensas de Combate (Victoria 001)
         R.string.victoria_001_message to "Has ganado el combate, elige una recompensa:",
@@ -48,14 +49,14 @@ val stringMap = mapOf(
         R.string.victoria_003_shield to "+1 Escudo",
         R.string.victoria_003_potion to "+1 Poción",
         R.string.victoria_003_heal to "+15 Cura Poción",
-        R.string.victoria_004_message to "Has ganado el combate, elige una recompensa:",
+        R.string.victoria_004_message to "Has ganado el combate. Prepárate para el desafío final. Elige una recompensa:",
         R.string.victoria_004_damage to "+2 Daño",
         R.string.victoria_004_shield to "+1 Escudo",
         R.string.victoria_004_potion to "+1 Poción",
         R.string.victoria_004_heal to "+15 Cura Poción",
 
         // Pantalla de Selección de Arma
-        R.string.weapon_selection_message to "Bienvenido, aventurero, elige el arma que prefieras:",
+        R.string.weapon_selection_message to "Bienvenido, aventurero. Elige el arma con la que deseas comenzar tu aventura:",
         R.string.weapon_mandoble to "Mandoble:\n+2 Daño",
         R.string.weapon_espada_escudo to "Espada y escudo:\n+1 Daño, +1 Escudo",
         R.string.weapon_escudo_pesado to "Escudo pesado:\n+2 Escudo"
@@ -81,40 +82,43 @@ val stringMap = mapOf(
         R.string.combate_atacar to "Attack",
         R.string.combate_defender to "Defend",
         R.string.combate_pocion to "Potion",
-        R.string.ES_001_combate to "You come across a mischievous enemy blocking your way. It doesn't seem too dangerous. What do you decide to do? Keep in mind that you can die and have to start over.",
+        R.string.combate_001 to "You find yourself face to face with a goblin blocking your path; although it doesn\'t seem very dangerous, you shouldn\'t let your guard down. What do you decide to do?",
+        R.string.combate_002 to "You come across a dark figure whose axe seems thirsty for blood; their ominous presence gives you chills. How do you choose to act?",
+        R.string.combate_003 to "You stand face to face with a mighty dragon whose very breath shakes the ground beneath you. Its piercing gaze challenges your courage. What do you do?",
+        R.string.combate_004 to "A towering and mysterious enemy appears before you, clearly ready for your arrival. Their presence is a real threat to your safety. What do you plan to do?",
+        R.string.combate_005 to "A dark and supernatural being risen from a forbidden realm stands between you and your final destiny. This is the ultimate challenge. How do you intend to act?",
         R.string.combate_reiniciar to "Try again",
 
         // Victory/Defeat Messages
-        R.string.victoria_mensaje to "You Win!",
-        R.string.derrota_mensaje to "You have been defeated!",
+        R.string.victoria_mensaje to "You win! Now you can take new paths and try other options. Do you dare to start over?",
+        R.string.derrota_mensaje to "Defeated! Your journey ends here. Everything will reset… but you can always try again.",
 
         // Combat Rewards (Victory 001)
-        R.string.victoria_001_message to "You have won the combat, choose a reward:",
+        R.string.victoria_001_message to "You have won the battle, choose a reward:",
         R.string.victoria_001_damage to "+1 Damage",
         R.string.victoria_001_shield to "+1 Shield",
         R.string.victoria_001_potion to "+1 Potion",
         R.string.victoria_001_heal to "+15 Potion Heal",
-        R.string.victoria_002_message to "You have won the combat, choose a reward:",
+        R.string.victoria_002_message to "You have won the battle, choose a reward:",
         R.string.victoria_002_damage to "+2 Damage",
         R.string.victoria_002_shield to "+1 Shield",
         R.string.victoria_002_potion to "+1 Potion",
         R.string.victoria_002_heal to "+15 Potion Heal",
-        R.string.victoria_003_message to "Has ganado el combate, elige una recompensa:",
-        R.string.victoria_003_damage to "+1 Daño",
-        R.string.victoria_003_shield to "+1 Escudo",
-        R.string.victoria_003_potion to "+1 Poción",
-        R.string.victoria_003_heal to "+15 Cura Poción",
-        R.string.victoria_004_message to "You have won the combat, choose a reward:",
+        R.string.victoria_003_message to "You have won the battle, choose a reward:",
+        R.string.victoria_003_damage to "+1 Damage",
+        R.string.victoria_003_shield to "+1 Shield",
+        R.string.victoria_003_potion to "+1 Potion",
+        R.string.victoria_003_heal to "+15 Potion Heal",
+        R.string.victoria_004_message to "You have won the battle. Prepare yourself for the final challenge. Choose your reward:",
         R.string.victoria_004_damage to "+2 Damage",
         R.string.victoria_004_shield to "+1 Shield",
         R.string.victoria_004_potion to "+1 Potion",
         R.string.victoria_004_heal to "+15 Potion Heal",
 
         // Weapon Selection Screen
-        R.string.weapon_selection_message to "Welcome, adventurer. Choose the weapon you prefer:",
+        R.string.weapon_selection_message to "Welcome, adventurer. Choose the weapon with which you wish to begin your journey:",
         R.string.weapon_mandoble to "Greatsword:\n+2 Damage",
         R.string.weapon_espada_escudo to "Sword and shield:\n+1 Damage, +1 Shield",
         R.string.weapon_escudo_pesado to "Heavy shield:\n+2 Shield"
     )
 )
-

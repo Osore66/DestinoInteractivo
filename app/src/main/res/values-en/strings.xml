@@ -1,14 +1,6 @@
 <resources>
     <string name="app_name">Interactive Fate</string>
 
-    <!-- Mensajes de combate -->
-    <string name="ES_001_combate">
-        You come across a mischievous enemy blocking your way. It doesn\'t seem too dangerous. What do you decide to do? Keep in mind that you can die and have to start over.
-    </string>
-    <string name="ES_002_combate">
-        You encounter a slippery slime blocking your path. It doesn\'t look too threatening. What do you decide to do? Remember that you could die and have to restart.
-    </string>
-
     <!-- Botones -->
     <string name="btn_continuar">Continue</string>
     <string name="btn_nueva_partida">New Game</string>
@@ -25,12 +17,18 @@
     <string name="ajustes_salir">Exit to menu</string>
 
     <!-- Combate -->
-    <string name="victoria_mensaje">You Win!</string>
-    <string name="derrota_mensaje">You have been defeated!</string>
+    <string name="victoria_mensaje">You win! Now you can take new paths and try other options. Do you dare to start over?</string>
+    <string name="derrota_mensaje">Defeated! Your journey ends here. Everything will reset… but you can always try again.</string>
     <string name="combate_atacar">Attack</string>
     <string name="combate_defender">Defend</string>
     <string name="combate_pocion">Potion</string>
     <string name="combate_reiniciar">Try again</string>
+
+    <string name="combate_001">You find yourself face to face with a goblin blocking your path; although it doesn\'t seem very dangerous, you shouldn\'t let your guard down. What do you decide to do?</string>
+    <string name="combate_002">You come across a dark figure whose axe seems thirsty for blood; their ominous presence gives you chills. How do you choose to act?</string>
+    <string name="combate_003">You stand face to face with a mighty dragon whose very breath shakes the ground beneath you. Its piercing gaze challenges your courage. What do you do?</string>
+    <string name="combate_004">A towering and mysterious enemy appears before you, clearly ready for your arrival. Their presence is a real threat to your safety. What do you plan to do?</string>
+    <string name="combate_005">A dark and supernatural being risen from a forbidden realm stands between you and your final destiny. This is the ultimate challenge. How do you intend to act?</string>
 
     <!-- Victoria Combate -->
     <string name="victoria_001_message">You have won the combat, choose a reward:</string>
@@ -51,14 +49,14 @@
     <string name="victoria_003_potion">+1 Poción</string>
     <string name="victoria_003_heal">+15 Cura Poción</string>
 
-    <string name="victoria_004_message">Has ganado el combate, elige una recompensa:</string>
+    <string name="victoria_004_message">You have won the battle. Prepare yourself for the final challenge. Choose your reward:</string>
     <string name="victoria_004_damage">+2 Damage</string>
     <string name="victoria_004_shield">+1 Shield</string>
     <string name="victoria_004_potion">+1 Potion</string>
     <string name="victoria_004_heal">+15 Potion Heal</string>
 
     <!--Elección armas -->
-    <string name="weapon_selection_message">Choose your starting weapon:</string>
+    <string name="weapon_selection_message">Welcome, adventurer. Choose the weapon with which you wish to begin your journey:</string>
     <string name="weapon_mandoble">Greatsword:\n+2 Damage</string>
     <string name="weapon_espada_escudo">Sword and Shield:\n+1 Damage, +1 Shield</string>
     <string name="weapon_escudo_pesado">Heavy Shield:\n+2 Shield</string>

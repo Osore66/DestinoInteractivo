@@ -1,14 +1,6 @@
 <resources>
     <string name="app_name">Destino Interactivo</string>
 
-    <!-- Mensajes de combate -->
-    <string name="ES_001_combate">
-        Te topas con un travieso enemigo que te impide avanzar, no parece muy peligroso, ¿qué decides hacer? Ten en cuenta que puedes morir y tener que empezar de nuevo.
-    </string>
-    <string name="ES_002_combate">
-        Te encuentras con un travieso slime que te impide avanzar, no parece muy peligroso, ¿qué decides hacer? Ten en cuenta que puedes morir y tener que empezar de nuevo.
-    </string>
-
     <!-- Botones -->
     <string name="btn_continuar">Continuar</string>
     <string name="btn_nueva_partida">Nueva Partida</string>
@@ -25,12 +17,17 @@
     <string name="ajustes_salir">Salir al menú</string>
 
     <!-- Combate -->
-    <string name="victoria_mensaje">¡Has ganado!</string>
-    <string name="derrota_mensaje">¡Has sido derrotado!</string>
+    <string name="victoria_mensaje">¡Has vencido! Ahora puedes tomar nuevos caminos y probar otras opciones. ¿Te atreves a volver a comenzar?</string>
+    <string name="derrota_mensaje">¡Derrotado! Tu aventura termina aquí. Todo se reiniciará… pero siempre puedes intentarlo de nuevo.</string>
     <string name="combate_atacar">Atacar</string>
     <string name="combate_defender">Defender</string>
     <string name="combate_pocion">Poción</string>
     <string name="combate_reiniciar">Volver a empezar</string>
+    <string name="combate_001">Te encuentras frente a un goblin que bloquea tu camino; aunque no parece muy peligroso, no debes confiarte. ¿Qué decides hacer?</string>
+    <string name="combate_002">Te cruzas con un sombrío individuo cuyo hacha parece tener sed de sangre; su presencia oscura te pone los pelos de punta. ¿Cómo decides actuar?</string>
+    <string name="combate_003">Te enfrentas cara a cara con un poderoso dragón cuya sola respiración hace temblar el suelo. Su mirada desafía tu valentía. ¿Qué haces?</string>
+    <string name="combate_004">Un enemigo imponente y lleno de misterio aparece ante ti, claramente preparado para tu llegada. Su presencia es una amenaza real a tu seguridad. ¿Qué piensas hacer?</string>
+    <string name="combate_005">Un ser oscuro y sobrenatural, surgido de un reino prohibido, se interpone entre tú y tu destino final. Este es el desafío definitivo. ¿Cómo piensas actuar?</string>
 
     <!-- Victoria Combate -->
     <string name="victoria_001_message">Has ganado el combate, elige una recompensa:</string>
@@ -51,14 +48,14 @@
     <string name="victoria_003_potion">+1 Poción</string>
     <string name="victoria_003_heal">+15 Cura Poción</string>
 
-    <string name="victoria_004_message">Has ganado el combate, elige una recompensa:</string>
+    <string name="victoria_004_message">Has ganado el combate. Prepárate para el desafío final. Elige una recompensa:</string>
     <string name="victoria_004_damage">+2 Daño</string>
     <string name="victoria_004_shield">+1 Escudo</string>
     <string name="victoria_004_potion">+1 Poción</string>
     <string name="victoria_004_heal">+15 Cura Poción</string>
 
    <!--Elección armas -->
-    <string name="weapon_selection_message">Escoje tu arma inicial:</string>
+    <string name="weapon_selection_message">Bienvenido, aventurero. Elige el arma con la que deseas comenzar tu aventura:</string>
     <string name="weapon_mandoble">Mandoble:\n+2 Daño</string>
     <string name="weapon_espada_escudo">Espada y escudo:\n+1 Daño, +1 Escudo</string>
     <string name="weapon_escudo_pesado">Escudo pesado:\n+2 Escudo</string>

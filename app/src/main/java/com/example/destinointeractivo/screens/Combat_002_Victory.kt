@@ -1,0 +1,45 @@
+package com.example.destinointeractivo.screens
+
+import androidx.activity.compose.BackHandler
+import androidx.compose.runtime.*
+import androidx.navigation.NavController
+import com.example.destinointeractivo.viewmodel.NavViewModel
+import com.example.destinointeractivo.R
+import com.example.destinointeractivo.navigation.AppScreens
+import com.example.destinointeractivo.functions.StatType
+import com.example.destinointeractivo.functions.VictoryRewardOption
+import com.example.destinointeractivo.functions.VictoryScreenData
+import com.example.destinointeractivo.functions.VictoryScreenLayout
+
+@Composable
+fun Combat_002_Victory(
+    navController: NavController,
+    navViewModel: NavViewModel
+) {
+    navViewModel.lastScreen.value = AppScreens.Combat_002_Victory.route
+    BackHandler { /* Evita retroceso */ }
+
+    // Define los datos específicos para esta pantalla de victoria
+    val damage = 2
+    val shield = 1
+    val potion = 1
+    val heal = 15
+    val victoryData = remember {
+        VictoryScreenData(
+            messageTextResId = R.string.victoria_001_message,
+            nextLevelRoute = AppScreens.Combat_003.route,
+            rewardOptions = listOf(
+                VictoryRewardOption(R.string.victoria_002_damage, 2, StatType.DAMAGE),
+                VictoryRewardOption(R.string.victoria_002_shield, 1, StatType.DEFENSE),
+                //VictoryRewardOption(R.string.victoria_002_potion, 1, StatType.POTION),
+                //VictoryRewardOption(R.string.victoria_002_heal, 15, StatType.POTION_HEAL_AMOUNT)
+            )
+        )
+    }
+    // Llama a la función de layout genérica de victoria desde el archivo utils
+    VictoryScreenLayout(
+        navController = navController,
+        navViewModel = navViewModel,
+        victoryData = victoryData
+    )
+}

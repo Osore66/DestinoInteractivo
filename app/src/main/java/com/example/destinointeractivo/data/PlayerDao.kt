@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PlayerDao {
 
-    // --- CRUD ---
     @Insert
     suspend fun insert(player: Player)
 

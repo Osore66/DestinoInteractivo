@@ -1,18 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    kotlin("kapt") // Añade esta línea
+    kotlin("kapt")
 }
 
 android {
     namespace = "com.example.destinointeractivo"
-    compileSdk = 35 // ¡HEMOS CAMBIADO ESTE VALOR A 35!
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.destinointeractivo"
         minSdk = 24
-        targetSdk = 34 // Puedes mantener targetSdk en 34 o subirlo a 35 si quieres.
-        // Para este error, solo necesitas cambiar compileSdk.
+        targetSdk = 34
+
         versionCode = 8
         versionName = "1.1"
 
@@ -42,8 +42,6 @@ android {
         compose = true
     }
     composeOptions {
-        // Asegúrate de que esta versión sea compatible con tu compileSdk 35 y las dependencias de Compose.
-        // Si tienes problemas después, podrías necesitar actualizarla a una más reciente.
         kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
@@ -72,17 +70,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     val nav_version = "2.8.0"
-
     implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1") // Esta es una de las que lo pedía.
-    // Aunque con el compileSdk en 35,
-    // puede que quieras actualizarla a la 2.6.x o 2.7.x
-    // para aprovechar las últimas mejoras.
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
     implementation ("androidx.compose.runtime:runtime-livedata:1.4.0")
-
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1") // Para usar Coroutines con Room
+    implementation("androidx.room:room-ktx:2.6.1")
 
 
 }

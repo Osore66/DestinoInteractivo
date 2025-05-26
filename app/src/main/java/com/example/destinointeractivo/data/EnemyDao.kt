@@ -25,7 +25,6 @@ interface EnemyDao {
     @Delete
     suspend fun delete(enemy: Enemy)
 
-    // Nuevo método para borrar todos los enemigos
     @Query("DELETE FROM enemies")
     suspend fun deleteAllEnemies()
 }

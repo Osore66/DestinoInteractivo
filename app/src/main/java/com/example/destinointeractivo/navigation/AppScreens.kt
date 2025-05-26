@@ -14,7 +14,6 @@ sealed class AppScreens(val route: String) {
     object Combat_002_Victory: AppScreens("Combat_002_Victory")
     object Combat_003_Victory: AppScreens("Combat_003_Victory")
     object Combat_004_Victory: AppScreens("Combat_004_Victory")
-
     object WeaponSelectionScreen: AppScreens("WeaponSelectionScreen")
 
 

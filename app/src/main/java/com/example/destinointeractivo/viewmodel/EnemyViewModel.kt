@@ -4,14 +4,12 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.destinointeractivo.data.AppDatabase
-import com.example.destinointeractivo.data.Enemy
 import com.example.destinointeractivo.data.EnemyDao
 import com.example.destinointeractivo.data.InitialData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 
 class EnemyViewModel(application: Application) : AndroidViewModel(application) {
@@ -72,10 +70,6 @@ class EnemyViewModel(application: Application) : AndroidViewModel(application) {
     fun getEnemyDefense(enemyId: Int): StateFlow<Int> = _enemyDefense
     fun getEnemyCritFreq(enemyId: Int): StateFlow<Int> = _enemyCritFreq
 
-    /**
-     * Reinicia los enemigos usando datos centrales de InitialData
-     * Asegura consistencia con AppDatabase.populateDatabase()
-     */
     suspend fun resetEnemyData() {
         enemyDao.deleteAllEnemies()
         for (enemy in InitialData.enemyList) {

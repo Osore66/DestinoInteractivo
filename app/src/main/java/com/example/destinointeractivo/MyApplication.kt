@@ -1,4 +1,3 @@
-// MyApplication.kt
 package com.example.destinointeractivo
 
 import android.app.Application
@@ -7,6 +6,8 @@ import android.util.Log
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.example.destinointeractivo.data.AppDatabase
 import com.example.destinointeractivo.data.PlayerDao
+import com.example.destinointeractivo.sound.BackgroundMusicPlayer
+import com.example.destinointeractivo.sound.SoundPlayer
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Dispatchers
