@@ -39,6 +39,24 @@
     <string name="victoria_001_potion">+1 Potion</string>
     <string name="victoria_001_heal">+15 Potion Heal</string>
 
+    <string name="victoria_002_message">You have won the combat, choose a reward:</string>
+    <string name="victoria_002_damage">+2 Damage</string>
+    <string name="victoria_002_shield">+1 Shield</string>
+    <string name="victoria_002_potion">+1 Potion</string>
+    <string name="victoria_002_heal">+15 Potion Heal</string>
+
+    <string name="victoria_003_message">Has ganado el combate, elige una recompensa:</string>
+    <string name="victoria_003_damage">+1 Daño</string>
+    <string name="victoria_003_shield">+1 Escudo</string>
+    <string name="victoria_003_potion">+1 Poción</string>
+    <string name="victoria_003_heal">+15 Cura Poción</string>
+
+    <string name="victoria_004_message">Has ganado el combate, elige una recompensa:</string>
+    <string name="victoria_004_damage">+2 Damage</string>
+    <string name="victoria_004_shield">+1 Shield</string>
+    <string name="victoria_004_potion">+1 Potion</string>
+    <string name="victoria_004_heal">+15 Potion Heal</string>
+
     <!--Elección armas -->
     <string name="weapon_selection_message">Choose your starting weapon:</string>
     <string name="weapon_mandoble">Greatsword:\n+2 Damage</string>

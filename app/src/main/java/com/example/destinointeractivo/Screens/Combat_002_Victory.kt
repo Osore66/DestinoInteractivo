@@ -25,10 +25,10 @@ fun Combat_002_Victory(
             messageTextResId = R.string.victoria_001_message,
             nextLevelRoute = AppScreens.Combat_003.route,
             rewardOptions = listOf(
-                VictoryRewardOption(R.string.victoria_001_damage, 1, StatType.DAMAGE),
-                VictoryRewardOption(R.string.victoria_001_shield, 1, StatType.DEFENSE),
-                VictoryRewardOption(R.string.victoria_001_potion, 1, StatType.POTION),
-                VictoryRewardOption(R.string.victoria_001_heal, 15, StatType.POTION_HEAL_AMOUNT)
+                VictoryRewardOption(R.string.victoria_002_damage, 2, StatType.DAMAGE),
+                VictoryRewardOption(R.string.victoria_002_shield, 1, StatType.DEFENSE),
+                //VictoryRewardOption(R.string.victoria_002_potion, 1, StatType.POTION),
+                //VictoryRewardOption(R.string.victoria_002_heal, 15, StatType.POTION_HEAL_AMOUNT)
             )
         )
     }

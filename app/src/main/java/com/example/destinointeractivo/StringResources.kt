@@ -38,11 +38,26 @@ val stringMap = mapOf(
         R.string.victoria_001_shield to "+1 Escudo",
         R.string.victoria_001_potion to "+1 Poción",
         R.string.victoria_001_heal to "+15 Cura Poción",
+        R.string.victoria_002_message to "Has ganado el combate, elige una recompensa:",
+        R.string.victoria_002_damage to "+2 Daño",
+        R.string.victoria_002_shield to "+1 Escudo",
+        R.string.victoria_002_potion to "+1 Poción",
+        R.string.victoria_002_heal to "+15 Cura Poción",
+        R.string.victoria_003_message to "Has ganado el combate, elige una recompensa:",
+        R.string.victoria_003_damage to "+1 Daño",
+        R.string.victoria_003_shield to "+1 Escudo",
+        R.string.victoria_003_potion to "+1 Poción",
+        R.string.victoria_003_heal to "+15 Cura Poción",
+        R.string.victoria_004_message to "Has ganado el combate, elige una recompensa:",
+        R.string.victoria_004_damage to "+2 Daño",
+        R.string.victoria_004_shield to "+1 Escudo",
+        R.string.victoria_004_potion to "+1 Poción",
+        R.string.victoria_004_heal to "+15 Cura Poción",
 
-        // Pantalla de Selección de Arma - ¡CAMBIOS AQUÍ!
+        // Pantalla de Selección de Arma
         R.string.weapon_selection_message to "Bienvenido, aventurero, elige el arma que prefieras:",
         R.string.weapon_mandoble to "Mandoble:\n+2 Daño",
-        R.string.weapon_espada_escudo to "Espada y escudo:\n+1 Daño, +1 Escudo", // Añadido doble \n para los dos stats
+        R.string.weapon_espada_escudo to "Espada y escudo:\n+1 Daño, +1 Escudo",
         R.string.weapon_escudo_pesado to "Escudo pesado:\n+2 Escudo"
     ),
 
@@ -79,11 +94,26 @@ val stringMap = mapOf(
         R.string.victoria_001_shield to "+1 Shield",
         R.string.victoria_001_potion to "+1 Potion",
         R.string.victoria_001_heal to "+15 Potion Heal",
+        R.string.victoria_002_message to "You have won the combat, choose a reward:",
+        R.string.victoria_002_damage to "+2 Damage",
+        R.string.victoria_002_shield to "+1 Shield",
+        R.string.victoria_002_potion to "+1 Potion",
+        R.string.victoria_002_heal to "+15 Potion Heal",
+        R.string.victoria_003_message to "Has ganado el combate, elige una recompensa:",
+        R.string.victoria_003_damage to "+1 Daño",
+        R.string.victoria_003_shield to "+1 Escudo",
+        R.string.victoria_003_potion to "+1 Poción",
+        R.string.victoria_003_heal to "+15 Cura Poción",
+        R.string.victoria_004_message to "You have won the combat, choose a reward:",
+        R.string.victoria_004_damage to "+2 Damage",
+        R.string.victoria_004_shield to "+1 Shield",
+        R.string.victoria_004_potion to "+1 Potion",
+        R.string.victoria_004_heal to "+15 Potion Heal",
 
-        // Weapon Selection Screen - ¡CAMBIOS AQUÍ!
+        // Weapon Selection Screen
         R.string.weapon_selection_message to "Welcome, adventurer. Choose the weapon you prefer:",
         R.string.weapon_mandoble to "Greatsword:\n+2 Damage",
-        R.string.weapon_espada_escudo to "Sword and shield:\n+1 Damage, +1 Shield", // Añadido doble \n para los dos stats
+        R.string.weapon_espada_escudo to "Sword and shield:\n+1 Damage, +1 Shield",
         R.string.weapon_escudo_pesado to "Heavy shield:\n+2 Shield"
     )
 )
