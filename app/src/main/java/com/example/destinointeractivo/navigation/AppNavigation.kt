@@ -26,9 +26,8 @@ import com.example.destinointeractivo.screens.DerrotaScreen
 import com.example.destinointeractivo.screens.VictoriaScreen
 import com.example.destinointeractivo.screens.WeaponSelectionScreen
 
-// Transiciones sin animación
-val noAnimationEnterTransition: EnterTransition = fadeIn(animationSpec = tween(0))
-val noAnimationExitTransition: ExitTransition = fadeOut(animationSpec = tween(0))
+val noAnimationEnterTransition: EnterTransition = fadeIn(animationSpec = tween(1)) // 1ms
+val noAnimationExitTransition: ExitTransition = fadeOut(animationSpec = tween(1)) // 1ms
 
 @Composable
 fun AppNavigation() {
