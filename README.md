@@ -41,11 +41,11 @@ Para ejecutar este proyecto localmente, sigue estos pasos:
 
 1.  **Clona el repositorio:**
     ```bash
-    git clone [https://github.com/tu-usuario/destino-interactivo.git](https://github.com/tu-usuario/destino-interactivo.git)
-    cd destino-interactivo
+    git clone [https://github.com/Osore66/DestinoInteractivo.git](https://github.com/Osore66/DestinoInteractivo.git)
+    cd DestinoInteractivo
     ```
 2.  **Abre el proyecto en Android Studio:**
-    Abre Android Studio y selecciona `Open an existing Android Studio project`. Navega hasta la carpeta `destino-interactivo` que acabas de clonar y ábrela.
+    Abre Android Studio y selecciona `Open an existing Android Studio project`. Navega hasta la carpeta `DestinoInteractivo` que acabas de clonar y ábrela.
 3.  **Sincroniza el proyecto:**
     Android Studio debería sincronizar automáticamente el proyecto y descargar las dependencias necesarias. Si no lo hace, haz clic en `Sync Project with Gradle Files` (el icono del elefante).
 4.  **Ejecuta la aplicación:**
@@ -72,9 +72,11 @@ El proyecto sigue una arquitectura MVVM y está organizado de manera modular, fa
 ## 💖 Créditos
 
 * **Autor:** David de Andrés Fontcuberta
-* **Tutor del Proyecto:** David Antolín Gutierrez
-* **Agradecimientos especiales a:** Salva, Nishi y Pau por su invaluable ayuda como testers y sus continuos consejos.
+* **Tutor del Proyecto:** David Antolín Gutiérrez
 
+## 📄 Licencia
+
+Este proyecto ha sido desarrollado en el marco del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) del IES El Grao, Valencia (2024-2025). La licencia específica no está definida en la memoria del proyecto. Se recomienda contactar al autor para más detalles sobre el uso y distribución.
 ## 📄 Licencia
 
 Este proyecto ha sido desarrollado en el marco del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) del IES El Grao, Valencia (2024-2025). La licencia específica no está definida en la memoria del proyecto. Se recomienda contactar al autor para más detalles sobre el uso y distribución.
