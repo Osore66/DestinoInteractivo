@@ -73,10 +73,6 @@ El proyecto sigue una arquitectura MVVM y está organizado de manera modular, fa
 * **Autor:** David de Andrés Fontcuberta
 * **Tutor del Proyecto:** David Antolín Gutiérrez
 
-## 📄 Licencia
-
-Este proyecto ha sido desarrollado en el marco del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) del IES El Grao, Valencia (2024-2025). La licencia específica no está definida en la memoria del proyecto. Se recomienda contactar al autor para más detalles sobre el uso y distribución.
-
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Osore66/DestinoInteractivo)
 
 
