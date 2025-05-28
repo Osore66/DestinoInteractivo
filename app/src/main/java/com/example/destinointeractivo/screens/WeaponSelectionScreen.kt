@@ -70,7 +70,8 @@ fun handleWeaponSelectionButtonClick(
     damageIncrease: Int,
     shieldIncrease: Int,
     nextScreenRoute: String,
-    navViewModel: NavViewModel
+    navViewModel: NavViewModel,
+    currentScreenRoute: String // *** AÑADIMOS ESTE PARÁMETRO ***
 ) {
     if (areButtonsEnabled.value) {
         areButtonsEnabled.value = false
@@ -94,14 +95,22 @@ fun handleWeaponSelectionButtonClick(
                 showShieldAnimationState.value = false // Oculta la segunda animación
             }
 
-            delay(500) // Espera un poco más para que las animaciones terminen si hubo varias
+            delay(300) // Espera un poco más para que las animaciones terminen si hubo varias
 
-            // Actualizamos lastScreen a Combat_001 antes de la navegación
-            navViewModel.lastScreen.value = AppScreens.Combat_001.route
+            // *** ELIMINAMOS O MODIFICAMOS ESTA LÍNEA, LA MÚSICA NO ES EL PROBLEMA PRINCIPAL ***
+            // navViewModel.lastScreen.value = AppScreens.Combat_001.route // Ya la actualizaremos con updateLastLevel
 
             playerViewModel.updateEnemyTurnCount(0)
-            playerViewModel.updateLastLevel(nextScreenRoute)
-            navController.navigate(nextScreenRoute)
+            playerViewModel.updateLastLevel(nextScreenRoute) // Esto guarda la ruta del *siguiente* nivel
+
+            delay(200)
+
+            // *** CAMBIO CLAVE AQUÍ: popUpTo para eliminar WeaponSelectionScreen ***
+            navController.navigate(nextScreenRoute) {
+                // currentScreenRoute es la ruta de la pantalla WeaponSelectionScreen
+                popUpTo(currentScreenRoute) { inclusive = true }
+                launchSingleTop = true
+            }
         }
     }
 }
@@ -111,12 +120,17 @@ fun WeaponSelectionScreen(
     navController: NavController,
     navViewModel: NavViewModel
 ) {
+    // Definimos la ruta de esta pantalla aquí
+    val THIS_SCREEN_ROUTE = AppScreens.WeaponSelectionScreen.route
+
     BackHandler { /* Evita retroceso */ }
 
     // Actualiza lastScreen cuando esta pantalla se compone
+    // y asegúrate de que se limpie la música al salir
     DisposableEffect(Unit) {
-        navViewModel.lastScreen.value = AppScreens.WeaponSelectionScreen.route
-        onDispose { }
+        navViewModel.lastScreen.value = THIS_SCREEN_ROUTE // Guardamos la ruta de esta pantalla
+        onDispose {
+        }
     }
 
     val context = LocalContext.current
@@ -140,18 +154,13 @@ fun WeaponSelectionScreen(
     val weaponSelectionData = remember {
         WeaponSelectionScreenData(
             messageTextResId = R.string.weapon_selection_message,
-            nextLevelRoute = AppScreens.Combat_001.route,
+            nextLevelRoute = AppScreens.Combat_001.route, // Por ejemplo, el primer combate
             weaponOptions = listOf(
                 WeaponOption(R.string.weapon_mandoble, 2, 0),
                 WeaponOption(R.string.weapon_espada_escudo, 1, 1),
                 WeaponOption(R.string.weapon_escudo_pesado, 0, 2)
             )
         )
-    }
-
-    DisposableEffect(Unit) {
-        BackgroundMusicPlayer.playMusic(R.raw.music_alegre_03)
-        onDispose { }
     }
 
     Scaffold(
@@ -293,7 +302,8 @@ fun WeaponSelectionScreen(
                                     damageIncrease = option.damageIncrease,
                                     shieldIncrease = option.shieldIncrease,
                                     nextScreenRoute = weaponSelectionData.nextLevelRoute,
-                                    navViewModel = navViewModel // <-- Pasamos navViewModel aquí
+                                    navViewModel = navViewModel,
+                                    currentScreenRoute = THIS_SCREEN_ROUTE // *** PASAMOS ESTA RUTA ***
                                 )
                             }
                         )

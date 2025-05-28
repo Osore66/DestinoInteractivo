@@ -42,6 +42,7 @@ import com.example.destinointeractivo.viewmodel.EnemyViewModel
 import com.example.destinointeractivo.viewmodel.PlayerViewModel
 import kotlinx.coroutines.launch
 import com.example.destinointeractivo.sound.BackgroundMusicPlayer
+import kotlinx.coroutines.delay
 
 @Composable
 fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
@@ -54,8 +55,6 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
     val coroutineScope = rememberCoroutineScope()
     val playerLanguage by playerViewModel.playerLanguage.collectAsState()
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
-    var areButtonsEnabled by remember { mutableStateOf(true) }
-    val lifecycleOwner = LocalLifecycleOwner.current
     navViewModel.lastScreen.value = AppScreens.MainScreen.route
 
     val lastLevelRoute by playerViewModel.lastLevel.collectAsState()
@@ -108,6 +107,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                     vibrationViewModel.vibrate(context)
                     SoundPlayer.playSoundButton(context)
                     coroutineScope.launch {
+                        delay(100)
                         navController.navigate(route = lastLevelRoute)
                     }
                 }
@@ -132,6 +132,7 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                             enemyViewModel.resetEnemyData()
                         }
                         playerViewModel.updateLastLevel(AppScreens.WeaponSelectionScreen.route)
+                        delay(100)
                         navController.navigate(route = AppScreens.WeaponSelectionScreen.route)
                     }
                 }
@@ -143,9 +144,12 @@ fun MainScreen(navController: NavController, navViewModel: NavViewModel) {
                 fontFamily = fuentePixelBold,
                 enabled = true,
                 onClick = {
-                    vibrationViewModel.vibrate(context)
-                    SoundPlayer.playSoundButton(context)
-                    navController.navigate(route = AppScreens.Ajustes.route)
+                    coroutineScope.launch {
+                        vibrationViewModel.vibrate(context)
+                        SoundPlayer.playSoundButton(context)
+                        delay(100)
+                        navController.navigate(route = AppScreens.Ajustes.route)
+                    }
                 }
             )
         }

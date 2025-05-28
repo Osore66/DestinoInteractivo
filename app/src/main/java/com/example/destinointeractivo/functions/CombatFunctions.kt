@@ -47,7 +47,7 @@ data class CombatScreenData(
     val enemyImageSize: Dp? = null,
     val startDialogueResId: Int? = null,
     // --- Parámetros de navegación ---
-    val currentScreenRoute: String,
+    val currentScreenRoute: String, // La ruta de la pantalla de combate actual
     val nextScreenRouteOnWin: String,
     val settingsScreenRoute: String = AppScreens.Ajustes.route
 )
@@ -127,13 +127,18 @@ fun CombatScreenLayout(
     val vibrationViewModel: VibrationViewModel = viewModel { VibrationViewModel(context) }
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
 
-    navViewModel.lastScreen.value = combatData.currentScreenRoute
-
     val enemyViewModel: EnemyViewModel = viewModel()
     val playerViewModel: PlayerViewModel = viewModel()
 
+    // No modificamos la música aquí
     DisposableEffect(Unit) {
         BackgroundMusicPlayer.playMusic(combatData.backgroundMusicResId)
+        onDispose { }
+    }
+
+    // Actualiza lastScreen cuando esta pantalla se compone
+    DisposableEffect(Unit) {
+        navViewModel.lastScreen.value = combatData.currentScreenRoute // Guardamos la ruta de esta pantalla de combate
         onDispose { }
     }
 
@@ -141,6 +146,7 @@ fun CombatScreenLayout(
         enemyViewModel.loadEnemyData(combatData.enemyId)
         playerViewModel.loadPlayerData()
     }
+
 
     val currentEnemyLife by enemyViewModel.currentEnemyLife.collectAsState(initial = 0)
     val maxEnemyLife by enemyViewModel.maxEnemyLife.collectAsState(initial = 0)
@@ -229,8 +235,15 @@ fun CombatScreenLayout(
             }
 
             if (newPlayerLife <= 0) {
-                playerViewModel.updateLastLevel(AppScreens.DerrotaScreen.route)
-                navController.navigate(route = AppScreens.DerrotaScreen.route)
+                coroutineScope.launch {
+                    playerViewModel.updateLastLevel(AppScreens.DerrotaScreen.route)
+                    delay(100)
+                    // *** CAMBIO CLAVE AQUÍ: popUpTo al navegar a la pantalla de derrota ***
+                    navController.navigate(route = AppScreens.DerrotaScreen.route) {
+                        popUpTo(combatData.currentScreenRoute) { inclusive = true } // Eliminar la pantalla de combate actual
+                        launchSingleTop = true
+                    }
+                }
             }
         }
     }
@@ -253,11 +266,16 @@ fun CombatScreenLayout(
                 if (newEnemyLife <= 0) {
                     playerViewModel.updateEnemyTurnCount(0)
                     playerViewModel.updateLastLevel(combatData.nextScreenRouteOnWin)
-                    navController.navigate(route = combatData.nextScreenRouteOnWin)
+                    delay(100)
+                    // *** CAMBIO CLAVE AQUÍ: popUpTo al navegar a la pantalla de victoria/siguiente nivel ***
+                    navController.navigate(route = combatData.nextScreenRouteOnWin) {
+                        popUpTo(combatData.currentScreenRoute) { inclusive = true } // Eliminar la pantalla de combate actual
+                        launchSingleTop = true
+                    }
                 } else {
                     onEnemyAttackInternal()
                 }
-                delay(300)
+                delay(200)
                 areButtonsEnabled = true
             }
         }

@@ -88,7 +88,8 @@ fun handleVictoryRewardButtonClick(
     showRewardAnimationState: MutableState<Boolean>,
     amount: Int,
     statType: StatType,
-    nextScreenRoute: String
+    nextScreenRoute: String,
+    navViewModel: NavViewModel // *** Añadimos navViewModel aquí ***
 ) {
     if (areButtonsEnabled.value) {
         areButtonsEnabled.value = false
@@ -108,12 +109,23 @@ fun handleVictoryRewardButtonClick(
             rewardAnimationAmountText.value = "+$amount"
             showRewardAnimationState.value = true
 
-            delay(500)
+            delay(300) // Delay para la animación de la recompensa
 
             // Navegación
             playerViewModel.updateEnemyTurnCount(0)
             playerViewModel.updateLastLevel(nextScreenRoute)
-            navController.navigate(nextScreenRoute)
+
+            // *** CAMBIO CLAVE AQUÍ: Aplicar popUpTo y delay antes de la navegación ***
+            // Capturamos la ruta actual antes de navegar
+            val currentVictoryScreenRoute = navViewModel.lastScreen.value
+            delay(200) // Delay antes de la navegación para dar tiempo a la UI/datos
+            navController.navigate(nextScreenRoute) {
+                // Eliminar la pantalla de victoria actual de la pila
+                // Usamos currentVictoryScreenRoute que capturamos para asegurarnos
+                // de que sea la pantalla de victoria la que se elimina.
+                popUpTo(currentVictoryScreenRoute) { inclusive = true }
+                launchSingleTop = true // Esto asegura que si ya hay una instancia del destino en la pila, se use esa en lugar de crear una nueva
+            }
         }
     }
 }
@@ -144,11 +156,12 @@ fun VictoryScreenLayout(
 
     val rewardAnimationAmountText = remember { mutableStateOf("") }
 
-
     DisposableEffect(Unit) {
         BackgroundMusicPlayer.playMusic(R.raw.music_win)
-        onDispose { }
+        onDispose {
+        }
     }
+
 
     Scaffold(
         topBar = {
@@ -306,7 +319,8 @@ fun VictoryScreenLayout(
                                     },
                                     amount = option.statIncreaseAmount,
                                     statType = option.statType,
-                                    nextScreenRoute = victoryData.nextLevelRoute
+                                    nextScreenRoute = victoryData.nextLevelRoute,
+                                    navViewModel = navViewModel // *** PASAR navViewModel ***
                                 )
                             }
                         )

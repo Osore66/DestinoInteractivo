@@ -29,6 +29,7 @@ import com.example.destinointeractivo.navigation.AppScreens
 import com.example.destinointeractivo.viewmodel.EnemyViewModel
 import com.example.destinointeractivo.viewmodel.PlayerViewModel
 import com.example.destinointeractivo.functions.PlayerStatusBar
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -39,18 +40,19 @@ fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
     val playerViewModel: PlayerViewModel = viewModel()
     val enemyViewModel: EnemyViewModel = viewModel()
 
-    navViewModel.lastScreen.value = AppScreens.DerrotaScreen.route
+    // Definimos la ruta de esta pantalla aquí
+    val THIS_SCREEN_ROUTE = AppScreens.DerrotaScreen.route
+
+    // Actualiza lastScreen cuando esta pantalla se compone
+    DisposableEffect(Unit) {
+        navViewModel.lastScreen.value = THIS_SCREEN_ROUTE
+        BackgroundMusicPlayer.playMusic(R.raw.music_derrota_02)
+        onDispose {
+        }
+    }
 
     // Carga las fuentes
     val fuentePixelBold = FontFamily(Font(R.font.pixelgeorgiabold))
-
-    DisposableEffect(Unit) {
-        // Reproducir la música de combate al entrar a esta pantalla
-        BackgroundMusicPlayer.playMusic(R.raw.music_derrota_02)
-        onDispose {
-            // No hacemos nada aquí. La música seguirá sonando si el usuario navega a otra pantalla.
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -103,7 +105,11 @@ fun DerrotaScreen(navController: NavController, navViewModel: NavViewModel) {
                                     enemyViewModel.resetEnemyData()
                                 }
                                 SoundPlayer.playSoundButton(context)
-                                navController.navigate(route = AppScreens.MainScreen.route)
+                                delay(100)
+                                navController.navigate(route = AppScreens.MainScreen.route) {
+                                    popUpTo(AppScreens.MainScreen.route) { inclusive = false }
+                                    launchSingleTop = true
+                                }
                             }
                         }
                     )
