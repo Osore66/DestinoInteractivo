@@ -24,7 +24,7 @@ val stringMap = mapOf(
         R.string.combate_pocion to "Poción",
         R.string.combate_001 to "Te encuentras frente a un goblin que bloquea tu camino; aunque no parece muy peligroso, no debes confiarte. ¿Qué decides hacer?",
         R.string.combate_002 to "Te cruzas con un sombrío individuo cuyo hacha parece tener sed se sangre; su presencia oscura te pone los pelos de punta. ¿Cómo decides actuar?",
-        R.string.combate_003 to "Te enfrentas cara a cara con un poderoso dragón cuya sola respiración hace temblar el suelo. Su mirada desafía tu valentía. ¿Qué haces",
+        R.string.combate_003 to "Te enfrentas cara a cara con un poderoso dragón cuya sola respiración hace temblar el suelo. Su mirada desafía tu valentía. ¿Qué haces?",
         R.string.combate_004 to "Un enemigo imponente y lleno de misterio aparece ante ti, claramente preparado para tu llegada. Su presencia es una amenaza real a tu seguridad. ¿Qué piensas hacer?",
         R.string.combate_005 to "Un ser oscuro y sobrenatural, surgido de un reino prohibido, se interpone entre tú y tu destino final. Este es el desafío definitivo. ¿Cómo piensas actuar?",
         R.string.combate_reiniciar to "Volver a empezar",
