@@ -1,4 +1,3 @@
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Osore66/DestinoInteractivo)
 # Destino Interactivo
 
 [![Android Studio](https://img.shields.io/badge/Developed%20with-Android%20Studio-3DDC84.svg)](https://developer.android.com/studio)
@@ -77,6 +76,7 @@ El proyecto sigue una arquitectura MVVM y está organizado de manera modular, fa
 ## 📄 Licencia
 
 Este proyecto ha sido desarrollado en el marco del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) del IES El Grao, Valencia (2024-2025). La licencia específica no está definida en la memoria del proyecto. Se recomienda contactar al autor para más detalles sobre el uso y distribución.
-## 📄 Licencia
 
-Este proyecto ha sido desarrollado en el marco del Ciclo Formativo de Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) del IES El Grao, Valencia (2024-2025). La licencia específica no está definida en la memoria del proyecto. Se recomienda contactar al autor para más detalles sobre el uso y distribución.
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Osore66/DestinoInteractivo)
+
+
